@@ -1,15 +1,15 @@
 class Fish{
 
-  String id;
-  String name;
-  String length;
-  String image;
+  final String scName;
+  final String comName;
+  final String description;
+  final String kingdom;
+  final String phylum;
+  final String family;
+  final String cls;
 
-  Fish({this.id, this.name, this.length, this.image});
+  Fish({this.scName, this.comName, this.description, this.kingdom, this.phylum, this.family, this.cls});
 
-//  Fish.fromDb(Map snapshot, String id){
-//    id = id ?? '',
-//    name = snapshot['']
-//  }
+
 
 }

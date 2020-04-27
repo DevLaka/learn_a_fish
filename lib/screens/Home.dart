@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:learnafish/services/db.dart';
+import 'package:learnafish/models/Fish.dart';
 import 'package:learnafish/services/db.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:learnafish/models/Fish.dart';
 import 'package:learnafish/Components/FishList.dart';
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<QuerySnapshot>.value(
+    return StreamProvider<List<Fish>>.value(
       value: dbService().fishStream,
       child: Scaffold(
         appBar: AppBar(
