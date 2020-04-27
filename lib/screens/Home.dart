@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learnafish/services/db.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -24,8 +25,19 @@ class Home extends StatelessWidget {
         ],
       ),
       body: Center(
-        child: Text(
-          'press the upper right icon on the app bar to navigate to the user management'
+        child: RaisedButton(
+          onPressed: () async{
+            try{
+              await dbService().updateFishData('sceintific name a', 'common name a', 'descirption a', 'kingdom a', ' a', 'family a', 'cls a');
+            }catch(e){
+
+            }
+
+          },
+          child: Text(
+            'Add',
+          ),
+          color: Colors.lightBlue,
         ),
       ),
     );
