@@ -7,9 +7,9 @@ class Fish{
 
   Fish({this.id, this.name, this.length, this.image});
 
-  Fish.fromDb(Map snapshot, String id){
-    id = id ?? '',
-    name = snapshot['']
-  }
+//  Fish.fromDb(Map snapshot, String id){
+//    id = id ?? '',
+//    name = snapshot['']
+//  }
 
 }
