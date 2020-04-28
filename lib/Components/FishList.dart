@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:learnafish/models/Fish.dart';
+import 'package:learnafish/Components/FishTile.dart';
 
 class FishList extends StatefulWidget {
   @override
@@ -24,8 +25,11 @@ class _FishListState extends State<FishList> {
       print(fish.scName);
     });
     
-    return Container(
-
+    return ListView.builder(
+      itemCount: fishes.length,
+      itemBuilder: (context, index) {
+        return FishTile(fish: fishes[index]);
+      },
     );
   }
 }
