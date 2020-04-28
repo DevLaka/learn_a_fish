@@ -23,6 +23,7 @@ class _FishListState extends State<FishList> {
       print(fish.description);
       print(fish.kingdom);
       print(fish.scName);
+      print(fish.len);
     });
     
     return ListView.builder(
