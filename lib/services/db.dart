@@ -19,6 +19,19 @@ class dbService{
     });
   }
 
+  Future updateSingleFishData(String id, String scName, String comName, String description, String kingdom, String phylum, String family, String cls, int len) async{
+    return fishCollection.document(id).setData({
+      'scName': scName,
+      'comName': comName,
+      'description': description,
+      'kingdom': kingdom,
+      'phylum': phylum,
+      'family': family,
+      'cls': cls,
+      'len': len,
+    });
+  }
+
   //get fish stream
   Stream<List<Fish>> get fishStream{
     return fishCollection.snapshots()
@@ -29,6 +42,7 @@ class dbService{
   List<Fish> _fishListFromSnapshot(QuerySnapshot snapshot){
     return snapshot.documents.map((document) {
       return Fish(
+        docID: document.documentID,
         scName: document.data['scName'] ?? '',
         comName: document.data['comName'] ?? '',
         description: document.data['description'] ?? '',
