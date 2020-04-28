@@ -28,6 +28,7 @@ class FishTile extends StatelessWidget {
           leading: CircleAvatar(
             radius: 25.0,
             backgroundColor: Colors.pinkAccent,
+            backgroundImage: AssetImage('assets/nemo.jpg'),
           ),
           title: Text(fish.comName),
           subtitle: Text(fish.scName),
