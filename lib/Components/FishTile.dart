@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learnafish/Components/FishUpdateForm.dart';
 import 'package:learnafish/models/Fish.dart';
 
 class FishTile extends StatelessWidget {
@@ -7,6 +8,18 @@ class FishTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    void _showFishSettings(Fish fish) {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 17.0, horizontal: 57.0),
+              child: FishUpdateForm(),
+            );
+          });
+    }
+
     return Padding(
       padding: EdgeInsets.only(top: 10.0),
       child: Card(
@@ -18,6 +31,7 @@ class FishTile extends StatelessWidget {
           ),
           title: Text(fish.comName),
           subtitle: Text(fish.scName),
+          onLongPress: () => _showFishSettings(fish),
         ),
       ),
     );

@@ -52,7 +52,7 @@ class Home extends StatelessWidget {
 //          child: RaisedButton(
 //            onPressed: () async{
 //              try{
-//                await dbService().updateFishData('sceintific name a', 'common name a', 'descirption a', 'kingdom a', ' a', 'family a', 'cls a');
+//                await dbService().updateFishData('sceintific name b', 'common name b', 'descirption b', 'kingdom b', 'phylum b', 'family b', 'cls b', 2);
 //              }catch(e){
 //
 //              }
