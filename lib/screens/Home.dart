@@ -64,7 +64,15 @@ class Home extends StatelessWidget {
 //            color: Colors.lightBlue,
 //          ),
 //        ),
-      body: FishList(),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/blue-background.jpg'),
+              fit: BoxFit.cover,
+            )
+          ),
+          child: FishList()
+        ),
       ),
     );
   }
