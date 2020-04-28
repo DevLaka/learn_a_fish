@@ -13,9 +13,10 @@ class _FishListState extends State<FishList> {
 
   @override
   Widget build(BuildContext context) {
-    final fishes = Provider.of<List<Fish>>(context);
+    final fishes = Provider.of<List<Fish>>(context) ?? [];
 
     fishes.forEach((fish){
+      print(fish.docID);
       print(fish.cls);
       print(fish.family);
       print(fish.phylum);

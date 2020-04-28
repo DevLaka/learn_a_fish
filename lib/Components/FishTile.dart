@@ -15,7 +15,7 @@ class FishTile extends StatelessWidget {
           builder: (context) {
             return Container(
               padding: EdgeInsets.symmetric(vertical: 17.0, horizontal: 57.0),
-              child: FishUpdateForm(),
+              child: FishUpdateForm(fish: fish),
             );
           });
     }
