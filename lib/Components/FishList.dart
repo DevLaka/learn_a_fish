@@ -18,8 +18,6 @@ class _FishListState extends State<FishList> {
     fishes.forEach((fish){
       print(fish.docID);
       print(fish.cls);
-      print(fish.family);
-      print(fish.phylum);
       print(fish.comName);
       print(fish.description);
       print(fish.kingdom);

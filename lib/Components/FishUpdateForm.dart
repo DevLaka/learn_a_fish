@@ -57,6 +57,7 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
             ),
             //slider
             Slider(
+              label: "Length",
               value: (_currentLen ?? widget.fish.len).toDouble(),
               min: 1,
               max: 100,
@@ -82,8 +83,6 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                    _currentComName ?? widget.fish.comName,
                    widget.fish.description,
                    widget.fish.kingdom,
-                   widget.fish.phylum,
-                   widget.fish.family,
                    _currentClass ?? widget.fish.cls,
                    _currentLen ?? widget.fish.len,
                  );
