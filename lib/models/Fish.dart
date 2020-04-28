@@ -7,8 +7,9 @@ class Fish{
   final String phylum;
   final String family;
   final String cls;
+  final int len;
 
-  Fish({this.scName, this.comName, this.description, this.kingdom, this.phylum, this.family, this.cls});
+  Fish({this.scName, this.comName, this.description, this.kingdom, this.phylum, this.family, this.cls, this.len});
 
 
 

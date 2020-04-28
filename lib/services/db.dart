@@ -6,7 +6,7 @@ class dbService{
   final CollectionReference fishCollection = Firestore.instance.collection('fishCollection');
 
   //add update fish
-  Future updateFishData(String scName, String comName, String description, String kingdom, String phylum, String family, String cls) async{
+  Future updateFishData(String scName, String comName, String description, String kingdom, String phylum, String family, String cls, int len) async{
     return fishCollection.document().setData({
       'scName': scName,
       'comName': comName,
@@ -14,7 +14,8 @@ class dbService{
       'kingdom': kingdom,
       'phylum': phylum,
       'family': family,
-      'cls': cls
+      'cls': cls,
+      'len': len,
     });
   }
 
@@ -35,6 +36,7 @@ class dbService{
         phylum: document.data['phylum'] ?? '',
         family: document.data['family'] ?? '',
         cls: document.data['cls'] ?? '',
+        len: document.data['len'] ?? '',
       );
     }).toList();
   }
