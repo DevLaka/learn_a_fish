@@ -9,6 +9,18 @@ import 'package:learnafish/Components/FishList.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    void _showFishSettings() {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            padding: EdgeInsets.symmetric(vertical: 17.0, horizontal: 57.0),
+            child: Text("bottom sheet"),
+          );
+        });
+    }
+
     return StreamProvider<List<Fish>>.value(
       value: dbService().fishStream,
       child: Scaffold(
@@ -28,6 +40,11 @@ class Home extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, '/userManagement');
               },
+            ),
+            FlatButton.icon(
+              onPressed: () => _showFishSettings(),
+              icon: Icon(Icons.settings),
+              label: Text('Settings')
             ),
           ],
         ),
