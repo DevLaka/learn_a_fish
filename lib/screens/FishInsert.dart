@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learnafish/Components/Constants.dart';
-import 'package:learnafish/services/db.dart';
+import 'package:learnafish/services/fish_crud_and_orther_services/db.dart';
 
 class FishInsert extends StatefulWidget {
   @override
