@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:learnafish/authentication_services/AuthenticationService.dart';
 import 'package:learnafish/models/Fish.dart';
 import 'package:learnafish/services/db.dart';
 import 'package:provider/provider.dart';
 import 'package:learnafish/Components/FishList.dart';
 
 class Home extends StatelessWidget {
+  //variables
+  final services _homeAuthentication = services();
   @override
   Widget build(BuildContext context) {
 
@@ -36,6 +39,13 @@ class Home extends StatelessWidget {
                 Navigator.pushNamed(context, '/fishInsert');
               },
             ),
+            FlatButton.icon(
+            icon: Icon(Icons.person),
+            label: Text('logout'),
+            onPressed: () async{
+              await _homeAuthentication.SignOut();
+            },
+          )
           ],
         ),
         body: Container(
