@@ -5,8 +5,8 @@ class dbService{
   // reference to the collection
   final CollectionReference fishCollection = Firestore.instance.collection('fishCollection');
 
-  //add update fish
-  Future updateFishData(String scName, String comName, String description, String kingdom, String cls, int len) async{
+  //insert a fish document to firestore database
+  Future addFishData(String scName, String comName, String description, String kingdom, String cls, int len) async{
     return fishCollection.document().setData({
       'scName': scName,
       'comName': comName,
@@ -17,6 +17,7 @@ class dbService{
     });
   }
 
+  //update a fish document to firestore database
   Future updateSingleFishData(String id, String scName, String comName, String description, String kingdom, String cls, int len) async{
     return fishCollection.document(id).setData({
       'scName': scName,
@@ -26,6 +27,11 @@ class dbService{
       'cls': cls,
       'len': len,
     });
+  }
+
+  //delete fish document form firestore database
+  Future deleteSingleFishData(String id) async{
+    return fishCollection.document(id).delete();
   }
 
   //get fish stream

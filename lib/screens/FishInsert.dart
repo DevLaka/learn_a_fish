@@ -176,7 +176,7 @@ class _FishInsertState extends State<FishInsert> {
 //                    loading = true;
                             });
                             try {
-                              dynamic result = await dbService().updateFishData(
+                              dynamic result = await dbService().addFishData(
                                   scientificName,
                                   commonName,
                                   description,
