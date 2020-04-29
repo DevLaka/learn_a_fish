@@ -13,6 +13,9 @@ class login extends StatefulWidget {
 class _loginState extends State<login> {
  
   final services _authentication = services();
+    //for validations
+  final _key = GlobalKey<FormState>();
+  String error = '';
     //text fields for  login
   String email = '';
   String password='';
@@ -48,10 +51,12 @@ class _loginState extends State<login> {
                 Container(
                    padding: EdgeInsets.fromLTRB(15.0, 150.0, 15.0, 0.0),
                    child: Form(
+                     key: _key,
                      child: Column(
                        children: <Widget>[
                          SizedBox(height:20.0),
                          TextFormField(
+                           validator: (val) =>val.isEmpty ? 'Enter email' : null,
                            decoration: InputDecoration(
                                labelText : 'Email',
                              labelStyle : TextStyle(
@@ -66,6 +71,8 @@ class _loginState extends State<login> {
                          ),
                          SizedBox(height: 20.0,),
                          TextFormField(
+                            validator: (val) =>val.length < 5 ? 
+                           'Enter a password more than 5 characters' : null,
                            decoration: InputDecoration(
                              labelText : 'Password',
                              labelStyle : TextStyle(
@@ -89,8 +96,19 @@ class _loginState extends State<login> {
                                 'Sign In'
                               ),
                               onPressed: () async{
+                                   if(_key.currentState.validate()){
+                                    dynamic output = await _authentication.login(email, password);
+                                    if(output == null){
+                                      setState(() => error= 'incorret password or email !');
 
+                                    }
+                                  }
                               }
+                          ),
+                           SizedBox(height:12.0),
+                          Text(
+                              error,
+                              style:TextStyle(color:Colors.red, fontSize: 12.0),
                           )
                        ],
                      ),
