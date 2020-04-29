@@ -8,7 +8,6 @@ class FishTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     void _showFishSettings(Fish fish) {
       showModalBottomSheet(
           context: context,

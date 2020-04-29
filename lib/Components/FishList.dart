@@ -9,21 +9,14 @@ class FishList extends StatefulWidget {
 }
 
 class _FishListState extends State<FishList> {
-
   @override
   Widget build(BuildContext context) {
     final fishes = Provider.of<List<Fish>>(context) ?? [];
 
-    fishes.forEach((fish){
-      print(fish.docID);
-      print(fish.cls);
-      print(fish.comName);
-      print(fish.description);
-      print(fish.kingdom);
-      print(fish.scName);
-      print(fish.len);
+    fishes.forEach((fish) {
+
     });
-    
+
     return ListView.builder(
       itemCount: fishes.length,
       itemBuilder: (context, index) {
