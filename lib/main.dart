@@ -6,27 +6,45 @@ import 'package:provider/provider.dart';
 import 'package:learnafish/screens/Home.dart';
 import 'package:learnafish/screens/UserManagement.dart';
 import 'package:learnafish/screens/FishInsert.dart';
+import 'package:splashscreen/splashscreen.dart';
 import 'screens/FishView.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget
-{ 
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<usermodel>.value(
-        value: services().user,
-          child: MaterialApp(
-          routes: {
-            '/home' : (context) => Home(),
-            '/userManagement' : (context) => UserManagement(),
-            '/fishInsert' : (context) => FishInsert(),
-            '/fishView' : (context) => FishView(),
+      value: services().user,
+      child: MaterialApp(
+        routes: {
+          '/home': (context) => Home(),
+          '/userManagement': (context) => UserManagement(),
+          '/fishInsert': (context) => FishInsert(),
+          '/fishView': (context) => FishView(),
         },
-        home: wrapper(),
+        home: SplashScreen(
+          gradientBackground: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.lightBlueAccent, Colors.indigo]),
+          loadingText: Text('Welcome to Nemo!!!',
+            style: TextStyle(
+              fontSize: 27.0,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 2.0,
+              color: Colors.lightBlueAccent,
+          ),
+          ),
+          seconds: 5,
+          backgroundColor: Colors.blueAccent,
+          image: Image.network(
+              'https://i.giphy.com/media/sxXJgb4LCmJ44/giphy.gif'),
+          loaderColor: Colors.white,
+          photoSize: 150.0,
+          navigateAfterSeconds: wrapper(),
+        ),
       ),
     );
   }
-
 }
-
