@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:learnafish/models/Fish.dart';
 import 'package:learnafish/services/db.dart';
 import 'package:provider/provider.dart';
-import 'package:learnafish/models/Fish.dart';
 import 'package:learnafish/Components/FishList.dart';
 
 class Home extends StatelessWidget {
@@ -40,22 +38,6 @@ class Home extends StatelessWidget {
             ),
           ],
         ),
-//        body: Center(
-//          child: RaisedButton(
-//            onPressed: () async{
-//              try{
-//                await dbService().updateFishData('sceintific name b', 'common name b', 'descirption b', 'kingdom b', 'phylum b', 'family b', 'cls b', 2);
-//              }catch(e){
-//
-//              }
-//
-//            },
-//            child: Text(
-//              'Add',
-//            ),
-//            color: Colors.lightBlue,
-//          ),
-//        ),
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
