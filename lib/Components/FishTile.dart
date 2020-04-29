@@ -27,7 +27,7 @@ class FishTile extends StatelessWidget {
           margin: EdgeInsets.fromLTRB(17.0, 7.0, 17.0, 0.0),
           child: ListTile(
             leading: CircleAvatar(
-              radius: 25.0,
+              radius: 50.0,
               backgroundColor: Colors.pinkAccent,
               backgroundImage: AssetImage('assets/nemo.jpg'),
             ),
