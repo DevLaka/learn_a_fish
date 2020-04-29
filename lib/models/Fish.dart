@@ -1,5 +1,4 @@
-class Fish{
-
+class Fish {
   final String docID;
   final String scName;
   final String comName;
@@ -8,8 +7,12 @@ class Fish{
   final String cls;
   final int len;
 
-  Fish({this.docID, this.scName, this.comName, this.description, this.kingdom, this.cls, this.len});
-
-
-
+  Fish(
+      {this.docID,
+      this.scName,
+      this.comName,
+      this.description,
+      this.kingdom,
+      this.cls,
+      this.len});
 }
