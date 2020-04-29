@@ -1,42 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:learnafish/authentication_services/AuthenticationService.dart';
+import 'package:learnafish/models/Fish.dart';
+import 'package:learnafish/services/db.dart';
+import 'package:provider/provider.dart';
+import 'package:learnafish/Components/FishList.dart';
 
 class Home extends StatelessWidget {
   //variables
   final services _homeAuthentication = services();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Home',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.account_box,
+
+    return StreamProvider<List<Fish>>.value(
+      value: dbService().fishStream,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Home',
+            style: TextStyle(
+              color: Colors.black,
             ),
-            onPressed: () {
-              Navigator.pushNamed(context, '/userManagement');
-            },
           ),
-          FlatButton.icon(
+          centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.account_box,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/userManagement');
+              },
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.add_box,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/fishInsert');
+              },
+            ),
+            FlatButton.icon(
             icon: Icon(Icons.person),
             label: Text('logout'),
             onPressed: () async{
               await _homeAuthentication.SignOut();
             },
           )
-        ],
-        
-      ),
-      body: Center(
-        child: Text(
-          'press the upper right icon on the app bar to navigate to the user management'
+          ],
+        ),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/blue-background.jpg'),
+              fit: BoxFit.cover,
+            )
+          ),
+          child: FishList()
         ),
       ),
     );
