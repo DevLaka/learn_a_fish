@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learnafish/Components/FishUpdateForm.dart';
 import 'package:learnafish/models/Fish.dart';
+import 'package:learnafish/screens/FishView.dart';
 import 'package:learnafish/services/fish_crud_and_orther_services/db.dart';
 
 class FishTile extends StatelessWidget {
@@ -34,6 +35,14 @@ class FishTile extends StatelessWidget {
             title: Text(fish.comName),
             subtitle: Text(fish.scName),
             onLongPress: () => _showFishSettings(fish),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FishView(fish: fish)
+                ),
+              );
+            },
             trailing: IconButton(
               icon: Icon(Icons.delete),
               onPressed: () => dbService().deleteSingleFishData(fish.docID),
