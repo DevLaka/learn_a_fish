@@ -13,7 +13,21 @@ final FirebaseAuth _instance = FirebaseAuth.instance;
   Stream<usermodel>get user{
     return _instance.onAuthStateChanged.map( _firebaseuser);
   }
-  //sign in
+  //login
+   Future login(String email , String pwd) async 
+  {
+    
+    try{
+      AuthResult rslt = await _instance.signInWithEmailAndPassword(email: email, password: pwd);
+      FirebaseUser reguser = rslt.user;
+      return  _firebaseuser(reguser);
+    }catch(e)
+    {
+      print(e.toString());
+      print('error');
+      return null;
+    }
+  }
 
   // register
   Future register(String email , String pwd) async 
