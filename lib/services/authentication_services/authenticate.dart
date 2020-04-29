@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:learnafish/screens/Login.dart';
 import 'package:learnafish/screens/Register.dart';
 
 class authenticate extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learnafish/authentication_services/AuthenticationService.dart';
+import 'package:learnafish/services/authentication_services/AuthenticationService.dart';
 import 'package:learnafish/models/user.dart';
 import 'package:learnafish/screens/wrapper.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget
         value: services().user,
           child: MaterialApp(
           routes: {
-            '/': (context) => Login(),
             '/home' : (context) => Home(),
             '/userManagement' : (context) => UserManagement(),
             '/fishInsert' : (context) => FishInsert(),

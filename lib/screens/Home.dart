@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:learnafish/authentication_services/AuthenticationService.dart';
+import 'package:learnafish/services/authentication_services/AuthenticationService.dart';
 import 'package:learnafish/models/Fish.dart';
-import 'package:learnafish/services/db.dart';
+import 'package:learnafish/services/fish_crud_and_orther_services/db.dart';
 import 'package:provider/provider.dart';
 import 'package:learnafish/Components/FishList.dart';
 
