@@ -139,6 +139,7 @@ class _FishInsertState extends State<FishInsert> {
                   }
                 }
                 _formkey.currentState.reset();
+                Navigator.of(context).pop();
                       },
                     ),
                     SizedBox(height: 15.0,),
