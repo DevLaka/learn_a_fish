@@ -8,7 +8,6 @@ class FishUpdateForm extends StatefulWidget {
   final Fish fish;
   FishUpdateForm({this.fish});
 
-
   @override
   _FishUpdateFormState createState() => _FishUpdateFormState();
 }
@@ -23,8 +22,6 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
 
   @override
   Widget build(BuildContext context) {
-
-    print(widget.fish.scName);
     return StreamProvider<List<Fish>>.value(
       value: dbService().fishStream,
       child: Form(
@@ -39,7 +36,8 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
             TextFormField(
               initialValue: widget.fish.comName,
               decoration: textInputDecoration,
-              validator: (value) => value.isEmpty ? "Please enter valid name" : null,
+              validator: (value) =>
+                  value.isEmpty ? "Please enter valid name" : null,
               onChanged: (value) => setState(() => _currentComName = value),
             ),
             SizedBox(height: 17.0),
@@ -47,7 +45,7 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
             DropdownButtonFormField(
               decoration: textInputDecoration,
               value: _currentClass ?? widget.fish.cls,
-              items: classes.map((cls){
+              items: classes.map((cls) {
                 return DropdownMenuItem(
                   value: cls,
                   child: Text(cls),
@@ -70,26 +68,25 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
             ),
             //button
             RaisedButton(
-              color: Colors.pinkAccent[400],
-              child: Text(
-                'Update',
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () async {
-               if(_formkey.currentState.validate()){
-                 await dbService().updateSingleFishData(
-                   widget.fish.docID,
-                   widget.fish.scName,
-                   _currentComName ?? widget.fish.comName,
-                   widget.fish.description,
-                   widget.fish.kingdom,
-                   _currentClass ?? widget.fish.cls,
-                   _currentLen ?? widget.fish.len,
-                 );
-                 Navigator.pop(context);
-               }
-              }
-            )
+                color: Colors.pinkAccent[400],
+                child: Text(
+                  'Update',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () async {
+                  if (_formkey.currentState.validate()) {
+                    await dbService().updateSingleFishData(
+                      widget.fish.docID,
+                      widget.fish.scName,
+                      _currentComName ?? widget.fish.comName,
+                      widget.fish.description,
+                      widget.fish.kingdom,
+                      _currentClass ?? widget.fish.cls,
+                      _currentLen ?? widget.fish.len,
+                    );
+                    Navigator.pop(context);
+                  }
+                })
           ],
         ),
       ),

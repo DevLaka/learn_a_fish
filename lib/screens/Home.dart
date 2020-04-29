@@ -10,7 +10,6 @@ class Home extends StatelessWidget {
   final services _homeAuthentication = services();
   @override
   Widget build(BuildContext context) {
-
     return StreamProvider<List<Fish>>.value(
       value: dbService().fishStream,
       child: Scaffold(
@@ -49,14 +48,12 @@ class Home extends StatelessWidget {
           ],
         ),
         body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
+            decoration: BoxDecoration(
+                image: DecorationImage(
               image: AssetImage('assets/blue-background.jpg'),
               fit: BoxFit.cover,
-            )
-          ),
-          child: FishList()
-        ),
+            )),
+            child: FishList()),
       ),
     );
   }
