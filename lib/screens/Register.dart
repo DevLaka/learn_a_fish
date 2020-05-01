@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learnafish/services/authentication_services/AuthenticationService.dart';
+import 'package:learnafish/Components/Constants.dart';
 
 class register extends StatefulWidget {
   final Function redirect;
@@ -23,89 +24,143 @@ class _registerState extends State<register> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-        title: Text('Register'),
+        title: Text('REGISTER'),
+        centerTitle: true,
+        backgroundColor: Colors.indigo,
         actions: <Widget>[
-          FlatButton.icon(
+          IconButton(
               icon: Icon(Icons.person),
-              label: Text('Login'),
               onPressed: () {
                 widget.redirect();
               })
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
         children: <Widget>[
           Container(
-              child: Stack(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.fromLTRB(15.0, 110.0, 15.0, 0.0),
-                child: Form(
-                  key: _key,
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(height: 20.0),
-                      TextFormField(
-                          validator: (val) =>
-                              val.isEmpty ? 'Enter email' : null,
-                          decoration: InputDecoration(
-                              labelText: 'Email',
-                              labelStyle: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black)),
-                          onChanged: (val) {
-                            setState(() => registeremail = val);
-                          }),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      TextFormField(
-                        validator: (val) => val.length < 5
-                            ? 'Enter a password more than 5 characters'
-                            : null,
-                        decoration: InputDecoration(
-                            labelText: 'Password',
-                            labelStyle: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black)),
-                        obscureText: true,
-                        onChanged: (val) {
-                          setState(() => registerpassword = val);
-                        },
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      RaisedButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          color: Colors.lightBlue[400],
-                          child: Text('Register'),
-                          onPressed: () async {
-                            if (_key.currentState.validate()) {
-                              dynamic output = await _authentication.register(
-                                  registeremail, registerpassword);
-                              if (output == null) {
-                                setState(
-                                    () => error = 'registration unsuccessfull');
-                              }
-                            }
-                          }),
-                      SizedBox(height: 12.0),
-                      Text(
-                        error,
-                        style: TextStyle(color: Colors.red, fontSize: 12.0),
-                      )
-                    ],
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+            image: AssetImage('assets/background.jpg'),
+            fit: BoxFit.cover,
+          ))),
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 0.0),
+                  child: Center(
+                    child: CircleAvatar(
+                      radius: 60.0,
+                      backgroundImage: AssetImage('assets/reg.png'),
+                      backgroundColor: Colors.blueAccent,
+                    ),
                   ),
                 ),
-              )
-            ],
-          ))
+                Container(
+                    child: Stack(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 0.0),
+                      child: Form(
+                        key: _key,
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(height: 20.0),
+                            TextFormField(
+                                validator: (val) =>
+                                    val.isEmpty ? 'Enter email' : null,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                decoration: newTextInputDecoration.copyWith(
+                                  labelText: "E-Mail",
+                                  prefixIcon: Icon(
+                                    Icons.email,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                onChanged: (val) {
+                                  setState(() => registeremail = val);
+                                }),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            TextFormField(
+                              validator: (val) => val.length < 5
+                                  ? 'Enter a password more than 5 characters'
+                                  : null,
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                              decoration: newTextInputDecoration.copyWith(
+                                labelText: "Pasword",
+                                prefixIcon: Icon(
+                                  Icons.vpn_key,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              obscureText: true,
+                              onChanged: (val) {
+                                setState(() => registerpassword = val);
+                              },
+                            ),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            Container(
+                              height: 50.0,
+                              width: 250.0,
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 1.0, horizontal: 30.0),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment(0.9, 0.0),
+                                  colors: [Colors.blueAccent, Colors.indigo],
+                                ),
+                                borderRadius: new BorderRadius.circular(18.0),
+                              ),
+                              child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                  ),
+                                  textColor: Colors.white,
+                                  color: Colors.transparent,
+                                  child: Text('Register',
+                                      style: TextStyle(
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                  onPressed: () async {
+                                    if (_key.currentState.validate()) {
+                                      dynamic output =
+                                          await _authentication.register(
+                                              registeremail, registerpassword);
+                                      if (output == null) {
+                                        setState(() =>
+                                            error = 'registration unsuccessfull');
+                                      }
+                                    }
+                                  }),
+                            ),
+                            SizedBox(height: 12.0),
+                            Text(
+                              error,
+                              style: TextStyle(fontSize: 15.0,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red,),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ))
+              ],
+            ),
+          )
         ],
       ),
     );

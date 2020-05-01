@@ -24,27 +24,27 @@ class MyApp extends StatelessWidget {
           '/fishView': (context) => FishView(),
         },
         home: SplashScreen(
-          gradientBackground: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [Colors.lightBlueAccent, Colors.indigo]),
-          loadingText: Text('Welcome to Nemo!!!',
-            style: TextStyle(
-              fontSize: 27.0,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 2.0,
-              color: Colors.lightBlueAccent,
+            gradientBackground: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [Colors.lightBlueAccent, Colors.indigo]),
+            loadingText: Text('Welcome to Nemo!!!',
+              style: TextStyle(
+                fontSize: 27.0,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2.0,
+                color: Colors.lightBlueAccent,
+            ),
+            ),
+            seconds: 5,
+            backgroundColor: Colors.blueAccent,
+            image: Image.network(
+                'https://i.giphy.com/media/sxXJgb4LCmJ44/giphy.gif'),
+            loaderColor: Colors.white,
+            photoSize: 150.0,
+            navigateAfterSeconds: wrapper(),
           ),
-          ),
-          seconds: 5,
-          backgroundColor: Colors.blueAccent,
-          image: Image.network(
-              'https://i.giphy.com/media/sxXJgb4LCmJ44/giphy.gif'),
-          loaderColor: Colors.white,
-          photoSize: 150.0,
-          navigateAfterSeconds: wrapper(),
         ),
-      ),
     );
   }
 }
