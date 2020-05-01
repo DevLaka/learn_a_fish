@@ -19,11 +19,11 @@ class FishView extends StatelessWidget {
           centerTitle: true,
         ),
         body: Container(
-//          decoration: BoxDecoration(
-//            image: DecorationImage(
-//            image: AssetImage('assets/blue-background.jpg'),
-//            fit: BoxFit.cover,
-//          )),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+            image: AssetImage('assets/background.jpg'),
+            fit: BoxFit.cover,
+          )),
           child: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
@@ -44,7 +44,7 @@ class FishView extends StatelessWidget {
                   Text(
                     'Common Name',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.blueGrey,
                       letterSpacing: 1.7,
                       fontWeight: FontWeight.bold,
                       fontSize: 15.0,
@@ -54,7 +54,7 @@ class FishView extends StatelessWidget {
                   Text(
                     fish.comName,
                     style: TextStyle(
-                      color: Colors.greenAccent,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
                       letterSpacing: 2.0,
@@ -64,7 +64,7 @@ class FishView extends StatelessWidget {
                   Text(
                     'Scientific Name',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.blueGrey,
                       letterSpacing: 1.7,
                       fontWeight: FontWeight.bold,
                       fontSize: 15.0,
@@ -74,7 +74,7 @@ class FishView extends StatelessWidget {
                   Text(
                     fish.scName,
                     style: TextStyle(
-                      color: Colors.greenAccent,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
                       letterSpacing: 2.0,
@@ -84,7 +84,7 @@ class FishView extends StatelessWidget {
                   Text(
                     'Kingdom',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.blueGrey,
                       letterSpacing: 1.7,
                       fontWeight: FontWeight.bold,
                       fontSize: 15.0,
@@ -94,7 +94,7 @@ class FishView extends StatelessWidget {
                   Text(
                     fish.kingdom,
                     style: TextStyle(
-                      color: Colors.greenAccent,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
                       letterSpacing: 2.0,
@@ -104,7 +104,7 @@ class FishView extends StatelessWidget {
                   Text(
                     'Class',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.blueGrey,
                       letterSpacing: 1.7,
                       fontWeight: FontWeight.bold,
                       fontSize: 15.0,
@@ -114,7 +114,7 @@ class FishView extends StatelessWidget {
                   Text(
                     fish.cls,
                     style: TextStyle(
-                      color: Colors.greenAccent,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
                       letterSpacing: 2.0,
@@ -124,7 +124,7 @@ class FishView extends StatelessWidget {
                   Text(
                     'Length in CM s',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.blueGrey,
                       letterSpacing: 1.7,
                       fontWeight: FontWeight.bold,
                       fontSize: 15.0,
@@ -134,7 +134,7 @@ class FishView extends StatelessWidget {
                   Text(
                     fish.len.toString(),
                     style: TextStyle(
-                      color: Colors.greenAccent,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
                       letterSpacing: 2.0,
@@ -144,7 +144,7 @@ class FishView extends StatelessWidget {
                   Text(
                     'Description',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.blueGrey,
                       letterSpacing: 1.7,
                       fontWeight: FontWeight.bold,
                       fontSize: 15.0,
@@ -154,7 +154,7 @@ class FishView extends StatelessWidget {
                   Text(
                     fish.description,
                     style: TextStyle(
-                      color: Colors.greenAccent,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 20.0,
                       letterSpacing: 2.0,
