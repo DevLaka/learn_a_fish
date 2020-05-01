@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:learnafish/models/user.dart';
 import 'package:learnafish/screens/Home.dart';
-import 'package:learnafish/screens/Register.dart';
 import 'package:provider/provider.dart';
+import 'package:learnafish/services/authentication_services/authenticate.dart';
 
 class wrapper extends StatelessWidget{
   @override
@@ -10,9 +10,8 @@ class wrapper extends StatelessWidget{
     final userprovider = Provider.of<usermodel>(context);
 
     if(userprovider == null){
-      return register();
-    }else
-   {
+      return authenticate();
+    }else {
       return Home();
    }
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learnafish/screens/Register.dart';
+import 'package:learnafish/screens/Login.dart';
 
 class authenticate extends StatefulWidget {
   @override
@@ -16,14 +17,14 @@ class _authenticateState extends State<authenticate> {
   }
   @override
   Widget build(BuildContext context) {
-   /* if (value)
+    if (value)
     {
       return login(redirect: redirect);
     }
     else
     {
       return register(redirect: redirect);
-    }*/
-    return register();
+    }
+//    return register();
   }
 }

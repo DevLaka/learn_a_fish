@@ -63,18 +63,18 @@ class _FishInsertState extends State<FishInsert> {
             ),
           ]).show();
     }
-
     return Scaffold(
         appBar: AppBar(
           title: Text('Add a Fish'),
           centerTitle: true,
+          backgroundColor: Colors.indigo,
         ),
         body: Stack(
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
                   image: DecorationImage(
-                image: AssetImage('assets/blue-background.jpg'),
+                image: AssetImage('assets/background.jpg'),
                 fit: BoxFit.cover,
               )),
             ),
@@ -87,10 +87,18 @@ class _FishInsertState extends State<FishInsert> {
                     children: <Widget>[
                       SizedBox(height: 20.0),
                       TextFormField(
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                         validator: (value) =>
-                            value.isEmpty ? "This cannot be empty" : null,
-                        decoration: textInputDecoration.copyWith(
-                            hintText: "Common Name"),
+                        value.isEmpty ? "This cannot be empty" : null,
+                        decoration: newTextInputDecoration.copyWith(
+                          labelText: "Common Name",
+                          prefixIcon: Icon(
+                            Icons.input,
+                            color: Colors.white,
+                          ),
+                        ),
                         onChanged: (value) {
                           setState(() {
                             commonName = value;
@@ -99,10 +107,18 @@ class _FishInsertState extends State<FishInsert> {
                       ),
                       SizedBox(height: 20.0),
                       TextFormField(
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                         validator: (value) =>
                             value.isEmpty ? "This cannot be empty" : null,
-                        decoration: textInputDecoration.copyWith(
-                            hintText: "Scientific Name"),
+                        decoration: newTextInputDecoration.copyWith(
+                          labelText: "Scientific Name",
+                          prefixIcon: Icon(
+                            Icons.input,
+                            color: Colors.white,
+                          ),
+                        ),
                         onChanged: (value) {
                           setState(() {
                             scientificName = value;
@@ -110,39 +126,51 @@ class _FishInsertState extends State<FishInsert> {
                         },
                       ),
                       SizedBox(height: 20.0),
-                      Container(
-                        color: Colors.white,
-                        child: Slider(
-                          label: "Length",
-                          value: (len).toDouble(),
-                          min: 1,
-                          max: 100,
-                          divisions: 50,
-                          onChanged: (value) {
-                            setState(() {
-                              len = value.round();
-                            });
-                          },
+                      Theme(
+                        data: Theme.of(context).copyWith(
+                          canvasColor: Colors.black87,
+                          textTheme: TextTheme(
+                            body1: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        child: DropdownButtonFormField(
+                          decoration: newTextInputDecoration.copyWith(
+                            labelText: "Class",
+                            prefixIcon: Icon(
+                              Icons.input,
+                              color: Colors.white,
+                            ),
+                          ),
+                          value: cls,
+                          items: classes.map((cls) {
+                            return DropdownMenuItem(
+                              value: cls,
+                              child: Container(
+                                decoration: BoxDecoration(),
+                                child: Text(cls),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (val) => setState(() => cls = val),
                         ),
                       ),
                       SizedBox(height: 20.0),
-                      DropdownButtonFormField(
-                        decoration: textInputDecoration,
-                        value: cls,
-                        items: classes.map((cls) {
-                          return DropdownMenuItem(
-                            value: cls,
-                            child: Text(cls),
-                          );
-                        }).toList(),
-                        onChanged: (val) => setState(() => cls = val),
-                      ),
-                      SizedBox(height: 20.0),
                       TextFormField(
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                         validator: (value) =>
                             value.isEmpty ? "This cannot be empty" : null,
-                        decoration:
-                            textInputDecoration.copyWith(hintText: "Kingdom"),
+                        decoration: newTextInputDecoration.copyWith(
+                          labelText: "Kingdom",
+                          prefixIcon: Icon(
+                            Icons.input,
+                            color: Colors.white,
+                          ),
+                        ),
                         onChanged: (value) {
                           setState(() {
                             kingdom = value;
@@ -151,10 +179,19 @@ class _FishInsertState extends State<FishInsert> {
                       ),
                       SizedBox(height: 20.0),
                       TextFormField(
+                        maxLines: 3,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                         validator: (value) =>
                             value.isEmpty ? "This cannot be empty" : null,
-                        decoration: textInputDecoration.copyWith(
-                            hintText: "Description"),
+                        decoration: newTextInputDecoration.copyWith(
+                          labelText: "Description",
+                          prefixIcon: Icon(
+                            Icons.input,
+                            color: Colors.white,
+                          ),
+                        ),
                         onChanged: (value) {
                           setState(() {
                             description = value;
@@ -162,45 +199,110 @@ class _FishInsertState extends State<FishInsert> {
                         },
                       ),
                       SizedBox(height: 20.0),
-                      RaisedButton(
-                        color: Colors.pink[400],
-                        child: Text(
-                          'Add a Fish',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: new BorderRadius.circular(18.0),
+                          color: Colors.black45,
                         ),
-                        onPressed: () async {
-                          if (_formkey.currentState.validate()) {
-                            setState(() {
+                        child: Column(
+                          children: <Widget>[
+                            Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Length of the Fish in Centi-meters',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            SliderTheme(
+                              data: SliderTheme.of(context).copyWith(
+                                thumbColor: Colors.lightBlueAccent,
+                                trackHeight: 4.0,
+                                activeTrackColor: Colors.blue,
+                                valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+                                valueIndicatorColor: Colors.indigo,
+                                valueIndicatorTextStyle: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              child: Slider(
+                                label: '${(len).toDouble()}',
+                                value: (len).toDouble(),
+                                min: 1,
+                                max: 100,
+                                divisions: 50,
+                                onChanged: (value) {
+                                  setState(() {
+                                    len = value.round();
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 20.0),
+                      Container(
+                        height: 50.0,
+                        width: 250.0,
+                        margin: EdgeInsets.symmetric(
+                            vertical: 1.0, horizontal: 30.0),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment(0.9, 0.0),
+                            colors: [Colors.blueAccent, Colors.indigo],
+                          ),
+                          borderRadius: new BorderRadius.circular(18.0),
+                        ),
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                          textColor: Colors.white,
+                          color: Colors.transparent,
+                          child: Text(
+                            'Add a Fish',
+                            style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          onPressed: () async {
+                            if (_formkey.currentState.validate()) {
+                              setState(() {
 //                    loading = true;
-                            });
-                            try {
-                              dynamic result = await dbService().addFishData(
-                                  scientificName,
-                                  commonName,
-                                  description,
-                                  kingdom,
-                                  cls,
-                                  len);
-                              print(result);
-                              if (result == null) {
-                                //successful pop up
+                              });
+                              try {
+                                dynamic result = await dbService().addFishData(
+                                    scientificName,
+                                    commonName,
+                                    description,
+                                    kingdom,
+                                    cls,
+                                    len);
+                                print(result);
+                                if (result == null) {
+                                  //successful pop up
 //                              _formkey.currentState.reset();
 //                              Navigator.of(context).pop();
-                                print('accessed');
-                                _showSuccessPopUp();
-                              }
-                            } catch (e) {
-                              setState(() {
-                                _showErrorPopUp(e);
+                                  print('accessed');
+                                  _showSuccessPopUp();
+                                }
+                              } catch (e) {
+                                setState(() {
+                                  _showErrorPopUp(e);
 //                              loading = false;
-                              });
-                              //error pop server failure
-                              print(e);
+                                });
+                                //error pop server failure
+                                print(e);
+                              }
                             }
-                          }
-                        },
+                          },
+                        ),
                       ),
                       SizedBox(height: 15.0),
                       Text(

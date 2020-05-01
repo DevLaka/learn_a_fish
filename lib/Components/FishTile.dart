@@ -13,6 +13,7 @@ class FishTile extends StatelessWidget {
     print(fish.docID);
     void _showFishSettings(Fish fish) {
       showModalBottomSheet(
+        backgroundColor: Colors.black45,
           context: context,
           builder: (context) {
             return Container(
