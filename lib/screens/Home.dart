@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learnafish/screens/UserManagement.dart';
 import 'package:learnafish/services/authentication_services/AuthenticationService.dart';
 import 'package:learnafish/models/Fish.dart';
 import 'package:learnafish/services/fish_crud_and_orther_services/db.dart';
@@ -11,6 +12,14 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    void _showusermanagement(){
+      showModalBottomSheet(context: context, builder: (context){
+        return Container(
+          padding: EdgeInsets.symmetric(vertical:20.0, horizontal:60.0),
+          child: usermanagement(),
+        );
+      });
+    }
     return StreamProvider<List<Fish>>.value(
       value: dbService().fishStream,
       child: Scaffold(
@@ -25,27 +34,24 @@ class Home extends StatelessWidget {
           actions: <Widget>[
             IconButton(
               icon: Icon(
-                Icons.account_box,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, '/userManagement');
-              },
-            ),
-            IconButton(
-              icon: Icon(
                 Icons.add_box,
               ),
               onPressed: () {
                 Navigator.pushNamed(context, '/fishInsert');
               },
+              
             ),
             FlatButton.icon(
             icon: Icon(Icons.person),
-            label: Text('logout'),
+            label: Text(''),
             onPressed: () async{
               await _homeAuthentication.SignOut();
             },
-          )
+          ),
+          FlatButton.icon(
+            onPressed: () =>_showusermanagement(),
+             icon: Icon(Icons.settings), 
+             label: Text(''))
           ],
         ),
         body: Container(

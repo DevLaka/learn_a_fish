@@ -11,7 +11,7 @@ class wrapper extends StatelessWidget{
     final userprovider = Provider.of<usermodel>(context);
 
     if(userprovider == null){
-      return login();
+      return register();
     }else
    {
       return Home();

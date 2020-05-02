@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget
           child: MaterialApp(
           routes: {
             '/home' : (context) => Home(),
-            '/userManagement' : (context) => UserManagement(),
             '/fishInsert' : (context) => FishInsert(),
         },
         home: wrapper(),
