@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:learnafish/Components/Constants.dart';
 import 'package:learnafish/services/fish_crud_and_orther_services/db.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -13,6 +13,7 @@ class FishInsert extends StatefulWidget {
 class _FishInsertState extends State<FishInsert> {
   final _formkey = GlobalKey<FormState>();
   final List<String> classes = ['cls a', 'cls b', 'cls c'];
+  File image;
 
   String commonName = "";
   String scientificName = "";
@@ -23,6 +24,22 @@ class _FishInsertState extends State<FishInsert> {
   String error = "";
   String cls = "cls a";
   int len = 1;
+
+  _useGallery() async{
+    var choseImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+    this.setState(() {
+      image = choseImage;
+    }
+    );
+  }
+
+  _useCamera() async{
+    var choseImage = await ImagePicker.pickImage(source: ImageSource.camera);
+    this.setState(() {
+      image = choseImage;
+    }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +65,26 @@ class _FishInsertState extends State<FishInsert> {
           ]).show();
     }
 
+    Future<bool> _showCameraDialog() {
+      return Alert(
+          context: context,
+          title: "Choose a mode",
+          buttons: [
+            DialogButton(
+              child: Text('Camera'),
+              onPressed: () async {
+                await _useCamera();
+              },
+            ),
+            DialogButton(
+              child: Text('Gallery'),
+              onPressed: () async {
+               await _useGallery();
+              },
+            ),
+          ]).show();
+    }
+
     Future<bool> _showErrorPopUp(Error e) {
       return Alert(
           context: context,
@@ -63,6 +100,7 @@ class _FishInsertState extends State<FishInsert> {
             ),
           ]).show();
     }
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Add a Fish'),
@@ -86,6 +124,14 @@ class _FishInsertState extends State<FishInsert> {
                   child: Column(
                     children: <Widget>[
                       SizedBox(height: 20.0),
+                      //camera and gallery selection
+                      Text("No image selected"),
+                      RaisedButton(
+                        onPressed: () {
+                          _showCameraDialog();
+                        },
+                        child: Text('Select Image'),
+                      ),
                       TextFormField(
                         style: TextStyle(
                           color: Colors.white,
