@@ -28,6 +28,7 @@ dependencies:
   provider: ^4.0.5+1
   rflutter_alert: ^1.0.3
   splashscreen: ^1.2.0
+  image_picker: ^0.6.5+3
 
 dev_dependencies:
   flutter_test:
