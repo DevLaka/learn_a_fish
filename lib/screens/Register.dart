@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learnafish/Components/Loading.dart';
 import 'package:learnafish/services/authentication_services/AuthenticationService.dart';
 
 class register extends StatefulWidget {
@@ -17,6 +18,7 @@ class _registerState extends State<register> {
   //for validations
   final _key = GlobalKey<FormState>();
   String error = '';
+  bool load = false;
 
 
 
@@ -25,7 +27,7 @@ class _registerState extends State<register> {
   String registerpassword='';
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return load ? Loading() : Scaffold(
       appBar: AppBar(
         title: Text('Register'),
         actions: <Widget>[
@@ -94,9 +96,14 @@ class _registerState extends State<register> {
                               ),
                               onPressed: () async{
                                   if(_key.currentState.validate()){
+                                    setState(()=> load = true);
                                     dynamic output = await _authentication.register(registeremail, registerpassword);
                                     if(output == null){
-                                      setState(() => error= 'registration unsuccessfull');
+                                      setState(() {
+                                         error= 'registration unsuccessfull';
+                                         load = false;
+                                    
+                                      });
 
                                     }
                                   }

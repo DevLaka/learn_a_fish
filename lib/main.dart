@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:learnafish/screens/UserManagementView.dart';
 import 'package:learnafish/services/authentication_services/AuthenticationService.dart';
 import 'package:learnafish/models/user.dart';
 import 'package:learnafish/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:learnafish/screens/Home.dart';
 import 'package:learnafish/screens/Login.dart';
-import 'package:learnafish/screens/UserManagement.dart';
 import 'package:learnafish/screens/FishInsert.dart';
 
 void main() => runApp(MyApp());
@@ -20,6 +20,8 @@ class MyApp extends StatelessWidget
           routes: {
             '/home' : (context) => Home(),
             '/fishInsert' : (context) => FishInsert(),
+            '/UserManagementview' : (context) => Usermanagementview(),
+            '/login' : (context) => login(),
         },
         home: wrapper(),
       ),
