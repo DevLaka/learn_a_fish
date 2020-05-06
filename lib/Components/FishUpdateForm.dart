@@ -252,23 +252,6 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                     setState(() => _currentScientificName = value),
               ),
               SizedBox(height: 17.0),
-              TextFormField(
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-                initialValue: widget.fish.kingdom,
-                decoration: newTextInputDecoration.copyWith(
-                  labelText: "Kingdom",
-                  prefixIcon: Icon(
-                    Icons.input,
-                    color: Colors.white,
-                  ),
-                ),
-                validator: (value) =>
-                    value.isEmpty ? "Please enter kingdom name" : null,
-                onChanged: (value) => setState(() => _currentKingdom = value),
-              ),
-              SizedBox(height: 17.0),
               Theme(
                 data: Theme.of(context).copyWith(
                   canvasColor: Colors.black87,
@@ -297,6 +280,7 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                   onChanged: (val) => setState(() => _currentClass = val),
                 ),
               ),
+              SizedBox(height: 17.0),
               Padding(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -314,9 +298,26 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                     ),
                   ),
                   validator: (value) =>
-                      value.isEmpty ? "Please enter a valid description" : null,
+                  value.isEmpty ? "Please enter a valid description" : null,
                   onChanged: (value) => setState(() => __currentDesc = value),
                 ),
+              ),
+              SizedBox(height: 17.0,),
+              TextFormField(
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+                initialValue: widget.fish.kingdom,
+                decoration: newTextInputDecoration.copyWith(
+                  labelText: "Kingdom",
+                  prefixIcon: Icon(
+                    Icons.input,
+                    color: Colors.white,
+                  ),
+                ),
+                validator: (value) =>
+                    value.isEmpty ? "Please enter kingdom name" : null,
+                onChanged: (value) => setState(() => _currentKingdom = value),
               ),
               SizedBox(height: 17.0),
               Container(

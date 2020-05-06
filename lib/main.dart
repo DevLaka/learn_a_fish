@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 letterSpacing: 2.0,
                 color: Colors.lightBlueAccent,
+                fontStyle: FontStyle.italic,
             ),
             ),
             seconds: 5,
