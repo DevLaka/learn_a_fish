@@ -32,12 +32,6 @@ class Home extends StatelessWidget {
               },
               
             ),
-            IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: () async{
-              await _homeAuthentication.SignOut();
-            },
-          ),
            //navigate to user management  
           IconButton(
               icon: Icon(
@@ -47,7 +41,13 @@ class Home extends StatelessWidget {
                 Navigator.pushNamed(context, '/UserManagementview');
               },
               
-            )
+            ),
+            IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: () async{
+                await _homeAuthentication.SignOut();
+              },
+            ),
           ],
         ),
         body: Container(

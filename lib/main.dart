@@ -6,7 +6,6 @@ import 'package:learnafish/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:learnafish/screens/Home.dart';
 import 'package:learnafish/screens/Login.dart';
-import 'package:learnafish/screens/UserManagement.dart';
 import 'package:learnafish/screens/FishInsert.dart';
 import 'package:splashscreen/splashscreen.dart';
 import 'screens/FishView.dart';

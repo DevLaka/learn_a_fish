@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:learnafish/Components/Loading.dart';
 import 'package:learnafish/models/user.dart';
+import 'package:learnafish/services/authentication_services/UserDBService.dart';
 import 'package:learnafish/services/fish_crud_and_orther_services/db.dart';
 import 'package:provider/provider.dart';
 
@@ -27,10 +28,11 @@ getcurrentuser() async {
   }
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<Userdata>(context);
+    final user = Provider.of<Userdata>(context) ?? Userdata(uid: DateTime.now().toIso8601String(), username: 'user', bio: 'biobio');
+    print(user.uid);
     getcurrentuser();
       return  load ? Loading() : StreamBuilder<Userdata>(
-      stream: dbService(uid:user.uid).userdata,
+      stream: UserDBService(uid:user.uid).userdata,
       builder: (context, snapshot) {
         if(snapshot.hasData){
           Userdata data = snapshot.data;
@@ -84,7 +86,7 @@ getcurrentuser() async {
                   onPressed: () async{
                     if(_key.currentState.validate()){
                       setState(()=> load = true);
-                      dynamic output = await dbService(uid: user.uid).updateUser(
+                      dynamic output = await UserDBService(uid: user.uid).updateUser(
                         _username ?? data.username,
                         _bio ?? data.bio
 
@@ -106,7 +108,7 @@ getcurrentuser() async {
                   color: Colors.lightBlue[400] ,
                   child: Text( 'delete'),
                   onPressed: () async{
-                      await dbService(uid: user.uid).deleteuser().then((_) {
+                      await UserDBService(uid: user.uid).deleteuser().then((_) {
                          setState(() { 
                         load = true;
                         Navigator.pushReplacementNamed(context, '/login');
