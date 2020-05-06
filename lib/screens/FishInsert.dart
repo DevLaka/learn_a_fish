@@ -295,6 +295,27 @@ class _FishInsertState extends State<FishInsert> {
                           ),
                           SizedBox(height: 20.0),
                           TextFormField(
+                            maxLines: 3,
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                            validator: (value) =>
+                            value.isEmpty ? "This cannot be empty" : null,
+                            decoration: newTextInputDecoration.copyWith(
+                              labelText: "Description",
+                              prefixIcon: Icon(
+                                Icons.input,
+                                color: Colors.white,
+                              ),
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                description = value;
+                              });
+                            },
+                          ),
+                          SizedBox(height: 20.0),
+                          TextFormField(
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -310,27 +331,6 @@ class _FishInsertState extends State<FishInsert> {
                             onChanged: (value) {
                               setState(() {
                                 kingdom = value;
-                              });
-                            },
-                          ),
-                          SizedBox(height: 20.0),
-                          TextFormField(
-                            maxLines: 3,
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                            validator: (value) =>
-                                value.isEmpty ? "This cannot be empty" : null,
-                            decoration: newTextInputDecoration.copyWith(
-                              labelText: "Description",
-                              prefixIcon: Icon(
-                                Icons.input,
-                                color: Colors.white,
-                              ),
-                            ),
-                            onChanged: (value) {
-                              setState(() {
-                                description = value;
                               });
                             },
                           ),
