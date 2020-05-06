@@ -14,10 +14,11 @@ class Home extends StatelessWidget {
       value: dbService().fishStream,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.indigo,
           title: Text(
-            'Home',
+            'HOME',
             style: TextStyle(
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
           centerTitle: true,
@@ -31,9 +32,8 @@ class Home extends StatelessWidget {
               },
               
             ),
-            FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text(''),
+            IconButton(
+            icon: Icon(Icons.exit_to_app),
             onPressed: () async{
               await _homeAuthentication.SignOut();
             },
@@ -51,14 +51,12 @@ class Home extends StatelessWidget {
           ],
         ),
         body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/blue-background.jpg'),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+              image: AssetImage('assets/background.jpg'),
               fit: BoxFit.cover,
-            )
-          ),
-          child: FishList()
-        ),
+            )),
+            child: FishList()),
       ),
     );
   }

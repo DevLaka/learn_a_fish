@@ -34,9 +34,9 @@ class dbService{
 
 
 
-  //add update fish
-  Future updateFishData(String scName, String comName, String description, String kingdom, String cls, int len) async{
-    return fishCollection.document().setData({
+  //insert a fish document to firestore database
+  Future addFishData(String id, String scName, String comName, String description, String kingdom, String cls, int len) async{
+    return fishCollection.document(id).setData({
       'scName': scName,
       'comName': comName,
       'description': description,
@@ -46,6 +46,7 @@ class dbService{
     });
   }
 
+  //update a fish document to firestore database
   Future updateSingleFishData(String id, String scName, String comName, String description, String kingdom, String cls, int len) async{
     return fishCollection.document(id).setData({
       'scName': scName,
@@ -55,6 +56,11 @@ class dbService{
       'cls': cls,
       'len': len,
     });
+  }
+
+  //delete fish document form firestore database
+  Future deleteSingleFishData(String id) async{
+    return fishCollection.document(id).delete();
   }
 
   //get fish stream
