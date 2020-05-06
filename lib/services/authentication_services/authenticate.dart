@@ -25,6 +25,5 @@ class _authenticateState extends State<authenticate> {
     {
       return register(redirect: redirect);
     }
-//    return register();
   }
 }

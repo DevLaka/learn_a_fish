@@ -19,10 +19,11 @@ class _FishTileState extends State<FishTile> {
 
   @override
   void initState() {
-    StorageReference firebaseStorageReference = FirebaseStorage.instance.ref().child(widget.fish.docID);
-    firebaseStorageReference.getDownloadURL().then(
-            (loc) => setState(() => imageUrl = loc)
-    );
+    StorageReference firebaseStorageReference =
+        FirebaseStorage.instance.ref().child(widget.fish.docID);
+    firebaseStorageReference
+        .getDownloadURL()
+        .then((iUrl) => setState(() => imageUrl = iUrl));
     super.initState();
   }
 
@@ -33,12 +34,11 @@ class _FishTileState extends State<FishTile> {
         image: Image.asset("assets/error-alert.png"),
         buttons: [
           DialogButton(
-            child: Text('Confirm Delete'),
-            onPressed: () {
-              dbService().deleteSingleFishData(widget.fish.docID);
-              Navigator.pop(context);
-          }
-          ),
+              child: Text('Confirm Delete'),
+              onPressed: () {
+                dbService().deleteSingleFishData(widget.fish.docID);
+                Navigator.pop(context);
+              }),
           DialogButton(
             child: Text('Cancel'),
             onPressed: () {
@@ -50,14 +50,15 @@ class _FishTileState extends State<FishTile> {
 
   @override
   Widget build(BuildContext context) {
-    StorageReference firebaseStorageReference = FirebaseStorage.instance.ref().child(widget.fish.docID);
-    firebaseStorageReference.getDownloadURL().then(
-            (loc) => setState(() => imageUrl = loc)
-    );
+    StorageReference firebaseStorageReference =
+        FirebaseStorage.instance.ref().child(widget.fish.docID);
+    firebaseStorageReference
+        .getDownloadURL()
+        .then((iUrl) => setState(() => imageUrl = iUrl));
 
     void _showFishSettings(Fish fish) {
       showModalBottomSheet(
-        backgroundColor: Colors.black45,
+          backgroundColor: Colors.black45,
           context: context,
           builder: (context) {
             return Container(
@@ -74,18 +75,18 @@ class _FishTileState extends State<FishTile> {
           child: Container(
             height: 80.0,
             child: ListTile(
-              leading:  SizedBox(
+              leading: SizedBox(
                 width: 100.0,
                 height: 110.0,
                 child: (imageUrl == null)
                     ? Image.asset(
-                  'assets/nemo.png',
-                  fit: BoxFit.fill,
-                )
+                        'assets/nemo.png',
+                        fit: BoxFit.fill,
+                      )
                     : Image.network(
-                  imageUrl,
-                  fit: BoxFit.fill,
-                ),
+                        imageUrl,
+                        fit: BoxFit.fill,
+                      ),
               ),
               title: Text(widget.fish.comName),
               subtitle: Text(widget.fish.scName),
@@ -94,14 +95,13 @@ class _FishTileState extends State<FishTile> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => FishView(fish: widget.fish, imageUrl: imageUrl)
-                  ),
+                      builder: (context) =>
+                          FishView(fish: widget.fish, imageUrl: imageUrl)),
                 );
               },
               trailing: IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () => _showDeleteConfirmationPopup()
-              ),
+                  icon: Icon(Icons.delete),
+                  onPressed: () => _showDeleteConfirmationPopup()),
             ),
           ),
         ));

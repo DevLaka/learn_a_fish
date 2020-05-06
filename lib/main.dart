@@ -20,34 +20,35 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         routes: {
           '/home': (context) => Home(),
-          '/UserManagementview' : (context) => Usermanagementview(),
+          '/UserManagementview': (context) => Usermanagementview(),
           '/fishInsert': (context) => FishInsert(),
           '/fishView': (context) => FishView(),
-          '/login' : (context) => login(),
+          '/login': (context) => login(),
         },
         home: SplashScreen(
-            gradientBackground: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [Colors.lightBlueAccent, Colors.indigo]),
-            loadingText: Text('Welcome to Nemo!!!',
-              style: TextStyle(
-                fontSize: 27.0,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 2.0,
-                color: Colors.lightBlueAccent,
-                fontStyle: FontStyle.italic,
+          gradientBackground: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.lightBlueAccent, Colors.indigo]),
+          loadingText: Text(
+            'Welcome to Nemo!!!',
+            style: TextStyle(
+              fontSize: 27.0,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 2.0,
+              color: Colors.lightBlueAccent,
+              fontStyle: FontStyle.italic,
             ),
-            ),
-            seconds: 5,
-            backgroundColor: Colors.blueAccent,
-            image: Image.network(
-                'https://i.giphy.com/media/sxXJgb4LCmJ44/giphy.gif'),
-            loaderColor: Colors.white,
-            photoSize: 150.0,
-            navigateAfterSeconds: wrapper(),
           ),
+          seconds: 5,
+          backgroundColor: Colors.blueAccent,
+          image: Image.network(
+              'https://i.giphy.com/media/sxXJgb4LCmJ44/giphy.gif'),
+          loaderColor: Colors.white,
+          photoSize: 150.0,
+          navigateAfterSeconds: wrapper(),
         ),
+      ),
     );
   }
 }

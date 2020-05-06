@@ -18,8 +18,11 @@ class FishUpdateForm extends StatefulWidget {
 
 class _FishUpdateFormState extends State<FishUpdateForm> {
   final _formkey = GlobalKey<FormState>();
-  final List<String> classes = ['cls a', 'cls b', 'cls c'];
-
+  final List<String> classes = [
+    'Superclass Agnatha',
+    'chondrichthyes',
+    'osteichthyes'
+  ];
   String imageUrl;
   File image;
   String _currentComName;
@@ -35,7 +38,7 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
         FirebaseStorage.instance.ref().child(widget.fish.docID);
     firebaseStorageReference
         .getDownloadURL()
-        .then((loc) => setState(() => imageUrl = loc));
+        .then((iUrl) => setState(() => imageUrl = iUrl));
     super.initState();
   }
 
@@ -44,7 +47,7 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
         FirebaseStorage.instance.ref().child(widget.fish.docID);
     firebaseStorageReference
         .getDownloadURL()
-        .then((loc) => setState(() => imageUrl = loc));
+        .then((iUrl) => setState(() => imageUrl = iUrl));
   }
 
   Future<bool> _showCameraDialog() {
@@ -88,9 +91,8 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
     StorageUploadTask imageUploadTask = firebaseStorageReference.putFile(image);
     StorageTaskSnapshot imageTaskSnapshot = await imageUploadTask.onComplete;
     setState(() {
-      print('picture uploaded');
       print(imageTaskSnapshot.storageMetadata.toString());
-//      updateImageUrl();
+      updateImageUrl();
     });
   }
 
@@ -138,10 +140,10 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                               imageUrl,
                               fit: BoxFit.fill,
                             )
-                          : Image.file(
-                              image,
-                              fit: BoxFit.fill,
-                            ),
+                      : Image.file(
+                          image,
+                          fit: BoxFit.fill,
+                        ),
                 ),
               ),
               SizedBox(
@@ -298,11 +300,13 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                     ),
                   ),
                   validator: (value) =>
-                  value.isEmpty ? "Please enter a valid description" : null,
+                      value.isEmpty ? "Please enter a valid description" : null,
                   onChanged: (value) => setState(() => __currentDesc = value),
                 ),
               ),
-              SizedBox(height: 17.0,),
+              SizedBox(
+                height: 17.0,
+              ),
               TextFormField(
                 style: TextStyle(
                   color: Colors.white,

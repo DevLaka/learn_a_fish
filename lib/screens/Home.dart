@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:learnafish/Components/FishList.dart';
 
 class Home extends StatelessWidget {
-  //variables
   final services _homeAuthentication = services();
   @override
   Widget build(BuildContext context) {
@@ -39,7 +38,6 @@ class Home extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushNamed(context, '/fishInsert');
                   },
-
                 ),
                 //navigate to user management
                 IconButton(
@@ -49,11 +47,10 @@ class Home extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushNamed(context, '/UserManagementview');
                   },
-
                 ),
                 IconButton(
                   icon: Icon(Icons.exit_to_app),
-                  onPressed: () async{
+                  onPressed: () async {
                     await _homeAuthentication.SignOut();
                   },
                 ),

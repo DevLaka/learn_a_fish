@@ -1,14 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:learnafish/models/Fish.dart';
-import 'package:learnafish/models/user.dart';
-import 'package:learnafish/models/user.dart';
 
 class dbService{
   // reference to the collection
   final CollectionReference fishCollection = Firestore.instance.collection('fishCollection');
 
-  //insert a fish document to firestore database
+  //insert a fish document to fireStore database
   Future addFishData(String id, String scName, String comName, String description, String kingdom, String cls, int len) async{
     return fishCollection.document(id).setData({
       'scName': scName,
@@ -20,7 +17,7 @@ class dbService{
     });
   }
 
-  //update a fish document to firestore database
+  //update a fish document to fireStore database
   Future updateSingleFishData(String id, String scName, String comName, String description, String kingdom, String cls, int len) async{
     return fishCollection.document(id).setData({
       'scName': scName,
@@ -32,7 +29,7 @@ class dbService{
     });
   }
 
-  //delete fish document form firestore database
+  //delete fish document form fireStore database
   Future deleteSingleFishData(String id) async{
     return fishCollection.document(id).delete();
   }
