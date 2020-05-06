@@ -3,6 +3,10 @@ import 'package:learnafish/Components/Constants.dart';
 import 'package:learnafish/models/Fish.dart';
 import 'package:learnafish/services/fish_crud_and_orther_services/db.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class FishUpdateForm extends StatefulWidget {
   final Fish fish;
@@ -16,6 +20,8 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
   final _formkey = GlobalKey<FormState>();
   final List<String> classes = ['cls a', 'cls b', 'cls c'];
 
+  String imageUrl;
+  File image;
   String _currentComName;
   String _currentClass;
   String _currentScientificName;
@@ -24,7 +30,73 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
   int _currentLen;
 
   @override
+  void initState() {
+    StorageReference firebaseStorageReference =
+        FirebaseStorage.instance.ref().child(widget.fish.docID);
+    firebaseStorageReference
+        .getDownloadURL()
+        .then((loc) => setState(() => imageUrl = loc));
+    super.initState();
+  }
+
+  void updateImageUrl() {
+    StorageReference firebaseStorageReference =
+        FirebaseStorage.instance.ref().child(widget.fish.docID);
+    firebaseStorageReference
+        .getDownloadURL()
+        .then((loc) => setState(() => imageUrl = loc));
+  }
+
+  Future<bool> _showCameraDialog() {
+    return Alert(context: context, title: "Choose a mode", buttons: [
+      DialogButton(
+        child: Text('Camera'),
+        onPressed: () async {
+          await _useCamera();
+        },
+      ),
+      DialogButton(
+        child: Text('Gallery'),
+        onPressed: () async {
+          await _useGallery();
+        },
+      ),
+    ]).show();
+  }
+
+  _useGallery() async {
+    var choseImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+    this.setState(() {
+      image = choseImage;
+      print(image);
+      print(image.path.toString());
+    });
+  }
+
+  _useCamera() async {
+    var choseImage = await ImagePicker.pickImage(source: ImageSource.camera);
+    this.setState(() {
+      image = choseImage;
+    });
+  }
+
+  Future uploadImage(BuildContext context, id) async {
+    String imageFileName = id;
+    print(imageFileName);
+    StorageReference firebaseStorageReference =
+        FirebaseStorage.instance.ref().child(imageFileName);
+    StorageUploadTask imageUploadTask = firebaseStorageReference.putFile(image);
+    StorageTaskSnapshot imageTaskSnapshot = await imageUploadTask.onComplete;
+    setState(() {
+      print('picture uploaded');
+      print(imageTaskSnapshot.storageMetadata.toString());
+//      updateImageUrl();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    String id = widget.fish.docID;
     return StreamProvider<List<Fish>>.value(
       value: dbService().fishStream,
       child: SingleChildScrollView(
@@ -37,7 +109,7 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                 height: 30.0,
                 decoration: BoxDecoration(
                   borderRadius: new BorderRadius.circular(18.0),
-                    border: Border.all(color: Colors.blueAccent),
+                  border: Border.all(color: Colors.blueAccent),
                 ),
                 child: Center(
                   child: Text(
@@ -52,6 +124,99 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                 ),
               ),
               SizedBox(height: 30.0),
+              Center(
+                child: SizedBox(
+                  width: 220.0,
+                  height: 160.0,
+                  child: (image == null)
+                      ? (imageUrl == null)
+                          ? Image.asset(
+                              'assets/nemo.png',
+                              fit: BoxFit.fill,
+                            )
+                          : Image.network(
+                              imageUrl,
+                              fit: BoxFit.fill,
+                            )
+                          : Image.file(
+                              image,
+                              fit: BoxFit.fill,
+                            ),
+                ),
+              ),
+              SizedBox(
+                height: 17.0,
+              ),
+              //camera and gallery selection
+              Row(
+                children: <Widget>[
+                  Container(
+                    height: 50.0,
+                    width: 100.0,
+                    margin:
+                        EdgeInsets.symmetric(vertical: 1.0, horizontal: 17.0),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment(0.9, 0.0),
+                        colors: [Colors.blueAccent, Colors.indigo],
+                      ),
+                      borderRadius: new BorderRadius.circular(18.0),
+                    ),
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      textColor: Colors.white,
+                      color: Colors.transparent,
+                      onPressed: () {
+                        _showCameraDialog();
+                      },
+                      child: Text(
+                        'Select Image',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin:
+                        EdgeInsets.symmetric(vertical: 1.0, horizontal: 10.0),
+                    height: 50.0,
+                    width: 100.0,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment(0.9, 0.0),
+                        colors: [Colors.blueAccent, Colors.indigo],
+                      ),
+                      borderRadius: new BorderRadius.circular(18.0),
+                    ),
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      textColor: Colors.white,
+                      color: Colors.transparent,
+                      onPressed: () {
+                        uploadImage(context, id);
+                      },
+                      child: Text(
+                        'Upload Image',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 25.0,
+              ),
               TextFormField(
                 style: TextStyle(
                   color: Colors.white,
@@ -83,7 +248,8 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                 ),
                 validator: (value) =>
                     value.isEmpty ? "Please enter scientific name" : null,
-                onChanged: (value) => setState(() => _currentScientificName = value),
+                onChanged: (value) =>
+                    setState(() => _currentScientificName = value),
               ),
               SizedBox(height: 17.0),
               TextFormField(
@@ -99,7 +265,7 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                   ),
                 ),
                 validator: (value) =>
-                value.isEmpty ? "Please enter kingdom name" : null,
+                    value.isEmpty ? "Please enter kingdom name" : null,
                 onChanged: (value) => setState(() => _currentKingdom = value),
               ),
               SizedBox(height: 17.0),
@@ -132,7 +298,8 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: TextFormField(
                   maxLines: 5,
                   style: TextStyle(
@@ -147,7 +314,7 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                     ),
                   ),
                   validator: (value) =>
-                  value.isEmpty ? "Please enter a valid description" : null,
+                      value.isEmpty ? "Please enter a valid description" : null,
                   onChanged: (value) => setState(() => __currentDesc = value),
                 ),
               ),
@@ -201,8 +368,7 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
               Container(
                 height: 50.0,
                 width: 250.0,
-                margin: EdgeInsets.symmetric(
-                    vertical: 1.0, horizontal: 30.0),
+                margin: EdgeInsets.symmetric(vertical: 1.0, horizontal: 30.0),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.centerLeft,
@@ -221,7 +387,8 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                       'Update',
                       style: TextStyle(
                         fontSize: 18.0,
-                        fontWeight: FontWeight.bold,),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     onPressed: () async {
                       if (_formkey.currentState.validate()) {

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:learnafish/Components/Constants.dart';
@@ -14,7 +15,7 @@ class _FishInsertState extends State<FishInsert> {
   final _formkey = GlobalKey<FormState>();
   final List<String> classes = ['cls a', 'cls b', 'cls c'];
   File image;
-
+  String id = DateTime.now().toIso8601String();
   String commonName = "";
   String scientificName = "";
   String family = "";
@@ -25,20 +26,20 @@ class _FishInsertState extends State<FishInsert> {
   String cls = "cls a";
   int len = 1;
 
-  _useGallery() async{
+  _useGallery() async {
     var choseImage = await ImagePicker.pickImage(source: ImageSource.gallery);
     this.setState(() {
       image = choseImage;
-    }
-    );
+      print(image);
+      print(image.path.toString());
+    });
   }
 
-  _useCamera() async{
+  _useCamera() async {
     var choseImage = await ImagePicker.pickImage(source: ImageSource.camera);
     this.setState(() {
       image = choseImage;
-    }
-    );
+    });
   }
 
   @override
@@ -66,23 +67,20 @@ class _FishInsertState extends State<FishInsert> {
     }
 
     Future<bool> _showCameraDialog() {
-      return Alert(
-          context: context,
-          title: "Choose a mode",
-          buttons: [
-            DialogButton(
-              child: Text('Camera'),
-              onPressed: () async {
-                await _useCamera();
-              },
-            ),
-            DialogButton(
-              child: Text('Gallery'),
-              onPressed: () async {
-               await _useGallery();
-              },
-            ),
-          ]).show();
+      return Alert(context: context, title: "Choose a mode", buttons: [
+        DialogButton(
+          child: Text('Camera'),
+          onPressed: () async {
+            await _useCamera();
+          },
+        ),
+        DialogButton(
+          child: Text('Gallery'),
+          onPressed: () async {
+            await _useGallery();
+          },
+        ),
+      ]).show();
     }
 
     Future<bool> _showErrorPopUp(Error e) {
@@ -101,6 +99,19 @@ class _FishInsertState extends State<FishInsert> {
           ]).show();
     }
 
+    Future uploadImage(BuildContext context) async {
+      String imageFileName = id;
+      print(imageFileName);
+      StorageReference firebaseStorageReference =
+          FirebaseStorage.instance.ref().child(imageFileName);
+      StorageUploadTask imageUploadTask =
+          firebaseStorageReference.putFile(image);
+      StorageTaskSnapshot imageTaskSnapshot = await imageUploadTask.onComplete;
+      setState(() {
+        print('picture uploaded');
+      });
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Add a Fish'),
@@ -112,8 +123,8 @@ class _FishInsertState extends State<FishInsert> {
             Container(
               decoration: BoxDecoration(
                   image: DecorationImage(
-                image: AssetImage('assets/background.jpg'),
-                fit: BoxFit.cover,
+                    image: AssetImage('assets/background.jpg'),
+                    fit: BoxFit.cover,
               )),
             ),
             Container(
@@ -123,21 +134,94 @@ class _FishInsertState extends State<FishInsert> {
                   key: _formkey,
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 20.0),
-                      //camera and gallery selection
-                      Text("No image selected"),
-                      RaisedButton(
-                        onPressed: () {
-                          _showCameraDialog();
-                        },
-                        child: Text('Select Image'),
+                      Center(
+                        child: SizedBox(
+                          width: 260.0,
+                          height: 220.0,
+                          child: (image == null)
+                              ? Image.asset(
+                                  'assets/nemo.png',
+                                  fit: BoxFit.fill,
+                                )
+                              : Image.file(
+                                  image,
+                                  fit: BoxFit.fill,
+                                ),
+                        ),
                       ),
+                      SizedBox(height: 17.0,),
+                      //camera and gallery selection
+                      Row(
+                        children: <Widget>[
+                          Container(
+                            height: 50.0,
+                            width: 130.0,
+                            margin: EdgeInsets.symmetric(
+                                vertical: 1.0, horizontal: 12.0),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment(0.9, 0.0),
+                                colors: [Colors.blueAccent, Colors.indigo],
+                              ),
+                              borderRadius: new BorderRadius.circular(18.0),
+                            ),
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                              textColor: Colors.white,
+                              color: Colors.transparent,
+                              onPressed: () {
+                                _showCameraDialog();
+                              },
+                              child: Text('Select Image',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: 1.0, horizontal: 20.0),
+                            height: 50.0,
+                            width: 130.0,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment(0.9, 0.0),
+                                colors: [Colors.blueAccent, Colors.indigo],
+                              ),
+                              borderRadius: new BorderRadius.circular(18.0),
+                            ),
+                            child: RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                              textColor: Colors.white,
+                              color: Colors.transparent,
+                              onPressed: () {
+                                uploadImage(context);
+                              },
+                              child: Text('Upload Image',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 17.0,),
                       TextFormField(
                         style: TextStyle(
                           color: Colors.white,
                         ),
                         validator: (value) =>
-                        value.isEmpty ? "This cannot be empty" : null,
+                            value.isEmpty ? "This cannot be empty" : null,
                         decoration: newTextInputDecoration.copyWith(
                           labelText: "Common Name",
                           prefixIcon: Icon(
@@ -268,7 +352,8 @@ class _FishInsertState extends State<FishInsert> {
                                 thumbColor: Colors.lightBlueAccent,
                                 trackHeight: 4.0,
                                 activeTrackColor: Colors.blue,
-                                valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+                                valueIndicatorShape:
+                                    PaddleSliderValueIndicatorShape(),
                                 valueIndicatorColor: Colors.indigo,
                                 valueIndicatorTextStyle: TextStyle(
                                   color: Colors.white,
@@ -313,9 +398,9 @@ class _FishInsertState extends State<FishInsert> {
                           child: Text(
                             'Add a Fish',
                             style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                                ),
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           onPressed: () async {
                             if (_formkey.currentState.validate()) {
@@ -324,12 +409,14 @@ class _FishInsertState extends State<FishInsert> {
                               });
                               try {
                                 dynamic result = await dbService().addFishData(
-                                    scientificName,
-                                    commonName,
-                                    description,
-                                    kingdom,
-                                    cls,
-                                    len);
+                                  id,
+                                  scientificName,
+                                  commonName,
+                                  description,
+                                  kingdom,
+                                  cls,
+                                  len,
+                                );
                                 print(result);
                                 if (result == null) {
                                   //successful pop up

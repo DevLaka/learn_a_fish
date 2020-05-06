@@ -6,8 +6,8 @@ class dbService{
   final CollectionReference fishCollection = Firestore.instance.collection('fishCollection');
 
   //insert a fish document to firestore database
-  Future addFishData(String scName, String comName, String description, String kingdom, String cls, int len) async{
-    return fishCollection.document().setData({
+  Future addFishData(String id, String scName, String comName, String description, String kingdom, String cls, int len) async{
+    return fishCollection.document(id).setData({
       'scName': scName,
       'comName': comName,
       'description': description,
