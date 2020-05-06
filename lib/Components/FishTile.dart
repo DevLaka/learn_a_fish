@@ -4,6 +4,7 @@ import 'package:learnafish/models/Fish.dart';
 import 'package:learnafish/screens/FishView.dart';
 import 'package:learnafish/services/fish_crud_and_orther_services/db.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class FishTile extends StatefulWidget {
   final Fish fish;
@@ -23,6 +24,28 @@ class _FishTileState extends State<FishTile> {
             (loc) => setState(() => imageUrl = loc)
     );
     super.initState();
+  }
+
+  Future<bool> _showDeleteConfirmationPopup() {
+    return Alert(
+        context: context,
+        title: "Are you sure you to delete!!!",
+        image: Image.asset("assets/error-alert.png"),
+        buttons: [
+          DialogButton(
+            child: Text('Confirm Delete'),
+            onPressed: () {
+              dbService().deleteSingleFishData(widget.fish.docID);
+              Navigator.pop(context);
+          }
+          ),
+          DialogButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ]).show();
   }
 
   @override
@@ -77,7 +100,7 @@ class _FishTileState extends State<FishTile> {
               },
               trailing: IconButton(
                 icon: Icon(Icons.delete),
-                onPressed: () => dbService().deleteSingleFishData(widget.fish.docID),
+                onPressed: () => _showDeleteConfirmationPopup()
               ),
             ),
           ),
