@@ -3,7 +3,8 @@ import 'package:learnafish/models/Fish.dart';
 
 class FishView extends StatelessWidget {
   final Fish fish;
-  FishView({this.fish});
+  final String imageUrl;
+  FishView({this.fish, this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +32,18 @@ class FishView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Center(
-                    child: CircleAvatar(
-                      radius: 80.0,
-                      backgroundImage: AssetImage('assets/nemo.jpg'),
+                    child: SizedBox(
+                      width: 260.0,
+                      height: 220.0,
+                      child: (imageUrl == null)
+                          ? Image.asset(
+                        'assets/nemo.png',
+                        fit: BoxFit.fill,
+                      )
+                          : Image.network(
+                        imageUrl,
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                   Divider(

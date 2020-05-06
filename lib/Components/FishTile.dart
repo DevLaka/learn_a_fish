@@ -3,14 +3,35 @@ import 'package:learnafish/Components/FishUpdateForm.dart';
 import 'package:learnafish/models/Fish.dart';
 import 'package:learnafish/screens/FishView.dart';
 import 'package:learnafish/services/fish_crud_and_orther_services/db.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-class FishTile extends StatelessWidget {
+class FishTile extends StatefulWidget {
   final Fish fish;
   FishTile({this.fish});
 
   @override
+  _FishTileState createState() => _FishTileState();
+}
+
+class _FishTileState extends State<FishTile> {
+  String imageUrl;
+
+  @override
+  void initState() {
+    StorageReference firebaseStorageReference = FirebaseStorage.instance.ref().child(widget.fish.docID);
+    firebaseStorageReference.getDownloadURL().then(
+            (loc) => setState(() => imageUrl = loc)
+    );
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print(fish.docID);
+    StorageReference firebaseStorageReference = FirebaseStorage.instance.ref().child(widget.fish.docID);
+    firebaseStorageReference.getDownloadURL().then(
+            (loc) => setState(() => imageUrl = loc)
+    );
+
     void _showFishSettings(Fish fish) {
       showModalBottomSheet(
         backgroundColor: Colors.black45,
@@ -27,26 +48,37 @@ class FishTile extends StatelessWidget {
         padding: EdgeInsets.only(top: 10.0),
         child: Card(
           margin: EdgeInsets.fromLTRB(17.0, 7.0, 17.0, 0.0),
-          child: ListTile(
-            leading: CircleAvatar(
-              radius: 50.0,
-              backgroundColor: Colors.pinkAccent,
-              backgroundImage: AssetImage('assets/nemo.jpg'),
-            ),
-            title: Text(fish.comName),
-            subtitle: Text(fish.scName),
-            onLongPress: () => _showFishSettings(fish),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => FishView(fish: fish)
+          child: Container(
+            height: 80.0,
+            child: ListTile(
+              leading:  SizedBox(
+                width: 100.0,
+                height: 110.0,
+                child: (imageUrl == null)
+                    ? Image.asset(
+                  'assets/nemo.png',
+                  fit: BoxFit.fill,
+                )
+                    : Image.network(
+                  imageUrl,
+                  fit: BoxFit.fill,
                 ),
-              );
-            },
-            trailing: IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () => dbService().deleteSingleFishData(fish.docID),
+              ),
+              title: Text(widget.fish.comName),
+              subtitle: Text(widget.fish.scName),
+              onLongPress: () => _showFishSettings(widget.fish),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FishView(fish: widget.fish, imageUrl: imageUrl)
+                  ),
+                );
+              },
+              trailing: IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () => dbService().deleteSingleFishData(widget.fish.docID),
+              ),
             ),
           ),
         ));
