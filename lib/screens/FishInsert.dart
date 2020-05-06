@@ -1,3 +1,18 @@
+/// ********************************************************************************************************************
+/// This project was developed by the below-mentioned developers who are studying for                                  *
+/// BSc (Hons) in Information Technology Specializing in Software Engineering at Sri Lanka Institute of                *
+/// Information Technology. This project is developed as an assignment for the module Current Trends in                *
+/// Software Engineering.                                                                                              *
+/// Student Name             IT Number                                                                                 *
+/// H.M.Y.L.W.Bandara       IT17250498                                                                                 *
+/// D.L.Kodagoda            IT17145008                                                                                 *
+///                                                                                                                    *
+/// The intellectual and technical concepts contained herein are proprietary to its developers mentioned above         *
+/// and Dissemination of this information or reproduction of this material is strictly forbidden unless                *
+/// prior written permission is obtained from the above mentioned developers.                                          *
+///                                                                                                                    *
+///*********************************************************************************************************************
+
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -56,13 +71,31 @@ class _FishInsertState extends State<FishInsert> {
           image: Image.asset("assets/success-alert.png"),
           buttons: [
             DialogButton(
-              child: Text('Add another fish'),
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment(0.9, 0.0),
+                colors: [Colors.blueAccent, Colors.indigo],
+              ),
+              child: Text('Add another fish',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             DialogButton(
-              child: Text('View Fish List'),
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment(0.9, 0.0),
+                colors: [Colors.blueAccent, Colors.indigo],
+              ),
+              child: Text('View Fish List',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),),
               onPressed: () {
                 Navigator.pushNamed(context, '/home');
               },
@@ -71,15 +104,37 @@ class _FishInsertState extends State<FishInsert> {
     }
 
     Future<bool> _showCameraDialog() {
-      return Alert(context: context, title: "Choose a mode", buttons: [
+      return Alert(context: context, title: "Choose a method", buttons: [
         DialogButton(
-          child: Text('Camera'),
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment(0.9, 0.0),
+            colors: [Colors.blueAccent, Colors.indigo],
+          ),
+          child: Text(
+            'Camera',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           onPressed: () async {
             await _useCamera();
           },
         ),
         DialogButton(
-          child: Text('Gallery'),
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment(0.9, 0.0),
+            colors: [Colors.blueAccent, Colors.indigo],
+          ),
+          child: Text(
+            'Gallery',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           onPressed: () async {
             await _useGallery();
           },
@@ -95,7 +150,18 @@ class _FishInsertState extends State<FishInsert> {
           image: Image.asset("assets/error-alert.png"),
           buttons: [
             DialogButton(
-              child: Text('Try Again'),
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment(0.9, 0.0),
+                colors: [Colors.blueAccent, Colors.indigo],
+              ),
+              child: Text(
+                'Try Again',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -414,8 +480,7 @@ class _FishInsertState extends State<FishInsert> {
                         ),
                         onPressed: () async {
                           if (_formkey.currentState.validate()) {
-                            setState(() {
-                            });
+                            setState(() {});
                             try {
                               dynamic result = await dbService().addFishData(
                                 id,
@@ -429,7 +494,7 @@ class _FishInsertState extends State<FishInsert> {
                               print(result);
                               if (result == null) {
                                 //successful pop up
-                              _formkey.currentState.reset();
+                                _formkey.currentState.reset();
                                 print('accessed');
                                 _showSuccessPopUp();
                               }
