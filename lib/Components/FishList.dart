@@ -13,10 +13,6 @@ class _FishListState extends State<FishList> {
   Widget build(BuildContext context) {
     final fishes = Provider.of<List<Fish>>(context) ?? [];
 
-    fishes.forEach((fish) {
-
-    });
-
     return ListView.builder(
       itemCount: fishes.length,
       itemBuilder: (context, index) {
