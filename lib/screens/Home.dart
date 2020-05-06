@@ -25,26 +25,29 @@ class Home extends StatelessWidget {
           actions: <Widget>[
             IconButton(
               icon: Icon(
-                Icons.account_box,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, '/userManagement');
-              },
-            ),
-            IconButton(
-              icon: Icon(
                 Icons.add_box,
               ),
               onPressed: () {
                 Navigator.pushNamed(context, '/fishInsert');
               },
+              
             ),
             IconButton(
             icon: Icon(Icons.exit_to_app),
             onPressed: () async{
               await _homeAuthentication.SignOut();
             },
-          )
+          ),
+           //navigate to user management  
+          IconButton(
+              icon: Icon(
+                Icons.people_outline,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/UserManagementview');
+              },
+              
+            )
           ],
         ),
         body: Container(

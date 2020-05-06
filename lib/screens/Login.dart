@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:learnafish/Components/Loading.dart';
 import 'package:learnafish/Components/Constants.dart';
 import 'package:learnafish/services/authentication_services/AuthenticationService.dart';
 
@@ -16,12 +17,15 @@ class _loginState extends State<login> {
   //for validations
   final _key = GlobalKey<FormState>();
   String error = '';
-  //text fields for  login
+  bool load = false;
+
+    //text fields for  login
   String email = '';
   String password = '';
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+
+    return load ? Loading() : Scaffold(
       appBar: AppBar(
         title: Text('LOGIN'),
         centerTitle: true,
@@ -133,11 +137,13 @@ class _loginState extends State<login> {
                                       )),
                                   onPressed: () async {
                                     if (_key.currentState.validate()) {
+                                      setState(()=> load = true);
                                       dynamic output = await _authentication
                                           .login(email, password);
                                       if (output == null) {
                                         setState(() => error =
                                             'incorret password or email !');
+                                            load = false;
                                       }
                                     }
                                   }),

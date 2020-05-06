@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learnafish/Components/Loading.dart';
 import 'package:learnafish/services/authentication_services/AuthenticationService.dart';
 import 'package:learnafish/Components/Constants.dart';
 
@@ -16,13 +17,14 @@ class _registerState extends State<register> {
   //for validations
   final _key = GlobalKey<FormState>();
   String error = '';
+  bool load = false;
 
   //text fields for  login
   String registeremail = '';
   String registerpassword = '';
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return load ? Loading() : Scaffold(
       appBar: AppBar(
         title: Text('REGISTER'),
         centerTitle: true,
@@ -93,7 +95,7 @@ class _registerState extends State<register> {
                               style: TextStyle(
                                 color: Colors.white,
                               ),
-                              decoration: newTextInputDecoration.copyWith(
+                  decoration: newTextInputDecoration.copyWith(
                                 labelText: "Pasword",
                                 prefixIcon: Icon(
                                   Icons.vpn_key,
@@ -134,12 +136,14 @@ class _registerState extends State<register> {
                                       )),
                                   onPressed: () async {
                                     if (_key.currentState.validate()) {
+                                      setState(()=> load = true);
                                       dynamic output =
                                           await _authentication.register(
                                               registeremail, registerpassword);
                                       if (output == null) {
                                         setState(() =>
                                             error = 'registration unsuccessfull');
+                                            load = false;
                                       }
                                     }
                                   }),

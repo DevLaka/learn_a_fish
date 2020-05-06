@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:learnafish/screens/UserManagementView.dart';
 import 'package:learnafish/services/authentication_services/AuthenticationService.dart';
 import 'package:learnafish/models/user.dart';
 import 'package:learnafish/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:learnafish/screens/Home.dart';
+import 'package:learnafish/screens/Login.dart';
 import 'package:learnafish/screens/UserManagement.dart';
 import 'package:learnafish/screens/FishInsert.dart';
 import 'package:splashscreen/splashscreen.dart';
@@ -19,9 +21,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         routes: {
           '/home': (context) => Home(),
-          '/userManagement': (context) => UserManagement(),
+          '/UserManagementview' : (context) => Usermanagementview(),
           '/fishInsert': (context) => FishInsert(),
           '/fishView': (context) => FishView(),
+          '/login' : (context) => login(),
         },
         home: SplashScreen(
             gradientBackground: LinearGradient(
