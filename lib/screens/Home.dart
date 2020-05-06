@@ -12,51 +12,56 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamProvider<List<Fish>>.value(
       value: dbService().fishStream,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.indigo,
-          title: Text(
-            'HOME',
-            style: TextStyle(
-              color: Colors.white,
-            ),
+      child: Stack(
+        children: <Widget>[
+          Image.asset(
+            'assets/background.jpg',
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,
           ),
-          centerTitle: true,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.add_box,
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              title: Text(
+                'HOME',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
-              onPressed: () {
-                Navigator.pushNamed(context, '/fishInsert');
-              },
-              
+              centerTitle: true,
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.add_box,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/fishInsert');
+                  },
+
+                ),
+                //navigate to user management
+                IconButton(
+                  icon: Icon(
+                    Icons.people_outline,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/UserManagementview');
+                  },
+
+                ),
+                IconButton(
+                  icon: Icon(Icons.exit_to_app),
+                  onPressed: () async{
+                    await _homeAuthentication.SignOut();
+                  },
+                ),
+              ],
             ),
-           //navigate to user management  
-          IconButton(
-              icon: Icon(
-                Icons.people_outline,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, '/UserManagementview');
-              },
-              
-            ),
-            IconButton(
-              icon: Icon(Icons.exit_to_app),
-              onPressed: () async{
-                await _homeAuthentication.SignOut();
-              },
-            ),
-          ],
-        ),
-        body: Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage('assets/background.jpg'),
-              fit: BoxFit.cover,
-            )),
-            child: FishList()),
+            body: FishList(),
+          ),
+        ],
       ),
     );
   }
