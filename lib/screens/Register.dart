@@ -24,44 +24,44 @@ class _registerState extends State<register> {
   String registerpassword = '';
   @override
   Widget build(BuildContext context) {
-    return load ? Loading() : Scaffold(
-      appBar: AppBar(
-        title: Text('REGISTER'),
-        centerTitle: true,
-        backgroundColor: Colors.indigo,
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.person),
-              onPressed: () {
-                widget.redirect();
-              })
-        ],
-      ),
-      body: Stack(
-        children: <Widget>[
-          Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-            image: AssetImage('assets/background.jpg'),
-            fit: BoxFit.cover,
-          ))),
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 0.0),
-                  child: Center(
-                    child: CircleAvatar(
-                      radius: 60.0,
-                      backgroundImage: AssetImage('assets/reg.png'),
-                      backgroundColor: Colors.blueAccent,
-                    ),
-                  ),
-                ),
-                Container(
-                    child: Stack(
+    return load ? Loading() : Stack(
+      children: <Widget>[
+        Image.asset(
+          'assets/background.jpg',
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          fit: BoxFit.cover,
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            title: Text('REGISTER'),
+            centerTitle: true,
+            backgroundColor: Colors.transparent,
+            actions: <Widget>[
+              IconButton(
+                  icon: Icon(Icons.person),
+                  onPressed: () {
+                    widget.redirect();
+                  })
+            ],
+          ),
+          body: Stack(
+            children: <Widget>[
+              SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 0.0),
+                      child: Center(
+                        child: CircleAvatar(
+                          radius: 60.0,
+                          backgroundImage: AssetImage('assets/reg.png'),
+                          backgroundColor: Colors.blueAccent,
+                        ),
+                      ),
+                    ),
                     Container(
                       padding: EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 0.0),
                       child: Form(
@@ -71,7 +71,7 @@ class _registerState extends State<register> {
                             SizedBox(height: 20.0),
                             TextFormField(
                                 validator: (val) =>
-                                    val.isEmpty ? 'Enter email' : null,
+                                val.isEmpty ? 'Enter email' : null,
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
@@ -95,7 +95,7 @@ class _registerState extends State<register> {
                               style: TextStyle(
                                 color: Colors.white,
                               ),
-                  decoration: newTextInputDecoration.copyWith(
+                              decoration: newTextInputDecoration.copyWith(
                                 labelText: "Pasword",
                                 prefixIcon: Icon(
                                   Icons.vpn_key,
@@ -138,12 +138,12 @@ class _registerState extends State<register> {
                                     if (_key.currentState.validate()) {
                                       setState(()=> load = true);
                                       dynamic output =
-                                          await _authentication.register(
-                                              registeremail, registerpassword);
+                                      await _authentication.register(
+                                          registeremail, registerpassword);
                                       if (output == null) {
                                         setState(() =>
-                                            error = 'registration unsuccessfull');
-                                            load = false;
+                                        error = 'registration unsuccessfull');
+                                        load = false;
                                       }
                                     }
                                   }),
@@ -161,12 +161,12 @@ class _registerState extends State<register> {
                       ),
                     )
                   ],
-                ))
-              ],
-            ),
-          )
-        ],
-      ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
