@@ -1,22 +1,20 @@
 /// ********************************************************************************************************************
-/// This project was developed by the below-mentioned developers who are studying for                                  *
-/// BSc (Hons) in Information Technology Specializing in Software Engineering at Sri Lanka Institute of                *
-/// Information Technology. This project is developed as an assignment for the module Current Trends in                *
-/// Software Engineering.                                                                                              *
-/// Student Name             IT Number                                                                                 *
-/// H.M.Y.L.W.Bandara       IT17250498                                                                                 *
-/// D.L.Kodagoda            IT17145008                                                                                 *
+/// This project was developed by two undergraduates who are studying for BSc (Hons) in Information Technology         *
+/// Specializing in Software Engineering at Sri Lanka Institute of Information Technology as an assignment for the     *
+/// module Current Trends in Software Engineering. The intellectual and technical concepts contained herein are        *
+/// proprietary to its developers and Dissemination of this information or reproduction of this material is            *
+/// strictly forbidden unless prior permission is obtained.                                                            *
 ///                                                                                                                    *
-/// The intellectual and technical concepts contained herein are proprietary to its developers mentioned above         *
-/// and Dissemination of this information or reproduction of this material is strictly forbidden unless                *
-/// prior written permission is obtained from the above mentioned developers.                                          *
+/// @description This class is responsible for updating the images in the firebase storage, update fish documents in   *
+/// the firebase fireStore, form validation, confirmation popups and dialogs.                                          *
+/// @author H.M.Y.L.W.Bandara IT1725098 lakshanwarunab@gmail.com                                                       *
 ///                                                                                                                    *
 ///*********************************************************************************************************************
 
 import 'package:flutter/material.dart';
 import 'package:learnafish/Components/Constants.dart';
 import 'package:learnafish/models/Fish.dart';
-import 'package:learnafish/services/fish_crud_and_orther_services/db.dart';
+import 'package:learnafish/services/fish_crud_and_orther_services/FishDBService.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -24,20 +22,27 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class FishUpdateForm extends StatefulWidget {
-  final Fish fish;
-  FishUpdateForm({this.fish});
+  final Fish
+      fish; // Fish type variable to assign the fish sent by FisTile Component
+  FishUpdateForm(
+      {this.fish}); //Constructor assigning Fish sent to the local variable
 
   @override
   _FishUpdateFormState createState() => _FishUpdateFormState();
 }
 
 class _FishUpdateFormState extends State<FishUpdateForm> {
-  final _formkey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<
+      FormState>(); // FormKey associated with form used for form validation
+
+  // List of fish classes that will be assigned to dropDown
   final List<String> classes = [
     'Superclass Agnatha',
     'chondrichthyes',
     'osteichthyes'
   ];
+
+  // Variables used to maintain state of user inputs
   String imageUrl;
   File image;
   String _currentComName;
@@ -47,16 +52,26 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
   String __currentDesc;
   int _currentLen;
 
+  // ignore: slash_for_doc_comments
+  /**
+   * @description uploadImageUrl() is called inside the intiState() to set the
+   * image URL before widget builds
+   * Reference : https://stackoverflow.com/questions/51963497/flutter-order-of-execution-build-and-initstate
+   */
   @override
   void initState() {
-    StorageReference firebaseStorageReference =
-        FirebaseStorage.instance.ref().child(widget.fish.docID);
-    firebaseStorageReference
-        .getDownloadURL()
-        .then((iUrl) => setState(() => imageUrl = iUrl));
+    updateImageUrl();
     super.initState();
   }
 
+  // ignore: slash_for_doc_comments
+  /**
+   * @description Get the image Url from the firebase Storage.
+   * The image is stored in the firebase storage with the same id of the fish document
+   * which is stored in firebase fireStore. Therefore to retrieve the image
+   * the fish doc is sent as an argument.
+   * Reference : https://stackoverflow.com/questions/53299919/how-to-display-image-from-firebase-storage-into-widget
+   */
   void updateImageUrl() {
     StorageReference firebaseStorageReference =
         FirebaseStorage.instance.ref().child(widget.fish.docID);
@@ -65,16 +80,38 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
         .then((iUrl) => setState(() => imageUrl = iUrl));
   }
 
+  // ignore: slash_for_doc_comments
+  /**
+   * @description Shows the popUp to choose the mode between camera or gallery
+   */
   Future<bool> _showCameraDialog() {
     return Alert(context: context, title: "Choose a mode", buttons: [
       DialogButton(
-        child: Text('Camera'),
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment(0.9, 0.0),
+          colors: [Colors.blueAccent, Colors.indigo],
+        ),
+        child: Text('Camera',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            )),
         onPressed: () async {
           await _useCamera();
         },
       ),
       DialogButton(
-        child: Text('Gallery'),
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment(0.9, 0.0),
+          colors: [Colors.blueAccent, Colors.indigo],
+        ),
+        child: Text('Gallery',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            )),
         onPressed: () async {
           await _useGallery();
         },
@@ -82,15 +119,21 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
     ]).show();
   }
 
+  // ignore: slash_for_doc_comments
+  /**
+   * @description Picking up the image by gallery mode using ImagePicker package
+   */
   _useGallery() async {
     var choseImage = await ImagePicker.pickImage(source: ImageSource.gallery);
     this.setState(() {
       image = choseImage;
-      print(image);
-      print(image.path.toString());
     });
   }
 
+  // ignore: slash_for_doc_comments
+  /**
+   * @description Picking up the image by camera mode using ImagePicker package
+   */
   _useCamera() async {
     var choseImage = await ImagePicker.pickImage(source: ImageSource.camera);
     this.setState(() {
@@ -98,6 +141,13 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
     });
   }
 
+  // ignore: slash_for_doc_comments
+  /**
+   * @description Uploads the Image to the firebase Storage.
+   * @param context - current build context
+   * @param id - id of the fish document
+   * Reference : https://youtu.be/7uqmY6le4xk
+   */
   Future uploadImage(BuildContext context, id) async {
     String imageFileName = id;
     print(imageFileName);
@@ -113,12 +163,12 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
 
   @override
   Widget build(BuildContext context) {
-    String id = widget.fish.docID;
+    String id = widget.fish.docID; //fish document id sent by FisTile Component
     return StreamProvider<List<Fish>>.value(
-      value: dbService().fishStream,
+      value: FishDBService().fishStream,
       child: SingleChildScrollView(
         child: Form(
-          key: _formkey,
+          key: _formKey,
           child: Column(
             children: <Widget>[
               Container(
@@ -411,8 +461,8 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                       ),
                     ),
                     onPressed: () async {
-                      if (_formkey.currentState.validate()) {
-                        await dbService().updateSingleFishData(
+                      if (_formKey.currentState.validate()) {
+                        await FishDBService().updateSingleFishData(
                           widget.fish.docID,
                           _currentScientificName ?? widget.fish.scName,
                           _currentComName ?? widget.fish.comName,
