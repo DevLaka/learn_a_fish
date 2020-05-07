@@ -14,25 +14,19 @@
 ///*********************************************************************************************************************
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:learnafish/models/Fish.dart';
-import 'package:learnafish/Components/FishTile.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class FishList extends StatefulWidget {
-  @override
-  _FishListState createState() => _FishListState();
-}
-
-class _FishListState extends State<FishList> {
+class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final fishes = Provider.of<List<Fish>>(context) ?? [];
-
-    return ListView.builder(
-      itemCount: fishes.length,
-      itemBuilder: (context, index) {
-        return FishTile(fish: fishes[index]);
-      },
+    return Container(
+      color: Colors.blueAccent[100],
+      child: Center(
+        child: SpinKitWanderingCubes(
+          color: Colors.blue,
+          size: 55.0,
+        ),
+      ),
     );
   }
 }

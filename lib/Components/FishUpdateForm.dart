@@ -1,3 +1,18 @@
+/// ********************************************************************************************************************
+/// This project was developed by the below-mentioned developers who are studying for                                  *
+/// BSc (Hons) in Information Technology Specializing in Software Engineering at Sri Lanka Institute of                *
+/// Information Technology. This project is developed as an assignment for the module Current Trends in                *
+/// Software Engineering.                                                                                              *
+/// Student Name             IT Number                                                                                 *
+/// H.M.Y.L.W.Bandara       IT17250498                                                                                 *
+/// D.L.Kodagoda            IT17145008                                                                                 *
+///                                                                                                                    *
+/// The intellectual and technical concepts contained herein are proprietary to its developers mentioned above         *
+/// and Dissemination of this information or reproduction of this material is strictly forbidden unless                *
+/// prior written permission is obtained from the above mentioned developers.                                          *
+///                                                                                                                    *
+///*********************************************************************************************************************
+
 import 'package:flutter/material.dart';
 import 'package:learnafish/Components/Constants.dart';
 import 'package:learnafish/models/Fish.dart';
@@ -18,8 +33,11 @@ class FishUpdateForm extends StatefulWidget {
 
 class _FishUpdateFormState extends State<FishUpdateForm> {
   final _formkey = GlobalKey<FormState>();
-  final List<String> classes = ['cls a', 'cls b', 'cls c'];
-
+  final List<String> classes = [
+    'Superclass Agnatha',
+    'chondrichthyes',
+    'osteichthyes'
+  ];
   String imageUrl;
   File image;
   String _currentComName;
@@ -35,7 +53,7 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
         FirebaseStorage.instance.ref().child(widget.fish.docID);
     firebaseStorageReference
         .getDownloadURL()
-        .then((loc) => setState(() => imageUrl = loc));
+        .then((iUrl) => setState(() => imageUrl = iUrl));
     super.initState();
   }
 
@@ -44,7 +62,7 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
         FirebaseStorage.instance.ref().child(widget.fish.docID);
     firebaseStorageReference
         .getDownloadURL()
-        .then((loc) => setState(() => imageUrl = loc));
+        .then((iUrl) => setState(() => imageUrl = iUrl));
   }
 
   Future<bool> _showCameraDialog() {
@@ -88,9 +106,8 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
     StorageUploadTask imageUploadTask = firebaseStorageReference.putFile(image);
     StorageTaskSnapshot imageTaskSnapshot = await imageUploadTask.onComplete;
     setState(() {
-      print('picture uploaded');
       print(imageTaskSnapshot.storageMetadata.toString());
-//      updateImageUrl();
+      updateImageUrl();
     });
   }
 
@@ -138,10 +155,10 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                               imageUrl,
                               fit: BoxFit.fill,
                             )
-                          : Image.file(
-                              image,
-                              fit: BoxFit.fill,
-                            ),
+                      : Image.file(
+                          image,
+                          fit: BoxFit.fill,
+                        ),
                 ),
               ),
               SizedBox(
@@ -252,23 +269,6 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                     setState(() => _currentScientificName = value),
               ),
               SizedBox(height: 17.0),
-              TextFormField(
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-                initialValue: widget.fish.kingdom,
-                decoration: newTextInputDecoration.copyWith(
-                  labelText: "Kingdom",
-                  prefixIcon: Icon(
-                    Icons.input,
-                    color: Colors.white,
-                  ),
-                ),
-                validator: (value) =>
-                    value.isEmpty ? "Please enter kingdom name" : null,
-                onChanged: (value) => setState(() => _currentKingdom = value),
-              ),
-              SizedBox(height: 17.0),
               Theme(
                 data: Theme.of(context).copyWith(
                   canvasColor: Colors.black87,
@@ -297,6 +297,7 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                   onChanged: (val) => setState(() => _currentClass = val),
                 ),
               ),
+              SizedBox(height: 17.0),
               Padding(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -317,6 +318,25 @@ class _FishUpdateFormState extends State<FishUpdateForm> {
                       value.isEmpty ? "Please enter a valid description" : null,
                   onChanged: (value) => setState(() => __currentDesc = value),
                 ),
+              ),
+              SizedBox(
+                height: 17.0,
+              ),
+              TextFormField(
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+                initialValue: widget.fish.kingdom,
+                decoration: newTextInputDecoration.copyWith(
+                  labelText: "Kingdom",
+                  prefixIcon: Icon(
+                    Icons.input,
+                    color: Colors.white,
+                  ),
+                ),
+                validator: (value) =>
+                    value.isEmpty ? "Please enter kingdom name" : null,
+                onChanged: (value) => setState(() => _currentKingdom = value),
               ),
               SizedBox(height: 17.0),
               Container(

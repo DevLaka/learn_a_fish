@@ -1,5 +1,21 @@
+/// ********************************************************************************************************************
+/// This project was developed by the below-mentioned developers who are studying for                                  *
+/// BSc (Hons) in Information Technology Specializing in Software Engineering at Sri Lanka Institute of                *
+/// Information Technology. This project is developed as an assignment for the module Current Trends in                *
+/// Software Engineering.                                                                                              *
+/// Student Name             IT Number                                                                                 *
+/// H.M.Y.L.W.Bandara       IT17250498                                                                                 *
+/// D.L.Kodagoda            IT17145008                                                                                 *
+///                                                                                                                    *
+/// The intellectual and technical concepts contained herein are proprietary to its developers mentioned above         *
+/// and Dissemination of this information or reproduction of this material is strictly forbidden unless                *
+/// prior written permission is obtained from the above mentioned developers.                                          *
+///                                                                                                                    *
+///*********************************************************************************************************************
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:learnafish/Components/Loading.dart';
 import 'package:learnafish/Components/Constants.dart';
 import 'package:learnafish/services/authentication_services/AuthenticationService.dart';
 
@@ -16,49 +32,58 @@ class _loginState extends State<login> {
   //for validations
   final _key = GlobalKey<FormState>();
   String error = '';
-  //text fields for  login
+  bool load = false;
+
+    //text fields for  login
   String email = '';
   String password = '';
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: AppBar(
-        title: Text('LOGIN'),
-        centerTitle: true,
-        backgroundColor: Colors.indigo,
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.person_add),
-              onPressed: () {
-                widget.redirect();
-              })
-        ],
-      ),
-      body: Stack(
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-            image: DecorationImage(
-            image: AssetImage('assets/background.jpg'),
-            fit: BoxFit.cover,
-          ))),
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 0.0),
-                  child: Center(
-                    child: CircleAvatar(
-                      radius: 60.0,
-                      backgroundImage: AssetImage('assets/login-icon.png'),
-                      backgroundColor: Colors.blueAccent,
-                    ),
-                  ),
-                ),
-                Container(
-                    child: Stack(
+
+    return load ? Loading() : Stack(
+      children: <Widget>[
+        Image.asset(
+          'assets/background.jpg',
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          fit: BoxFit.cover,
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            title: Text('LOGIN'),
+            centerTitle: true,
+            actions: <Widget>[
+              IconButton(
+                  icon: Icon(Icons.person_add),
+                  onPressed: () {
+                    widget.redirect();
+                  })
+            ],
+          ),
+          body: Stack(
+            children: <Widget>[
+              Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/background.jpg'),
+                        fit: BoxFit.cover,
+                      ))),
+              SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 0.0),
+                      child: Center(
+                        child: CircleAvatar(
+                          radius: 60.0,
+                          backgroundImage: AssetImage('assets/login-icon.png'),
+                          backgroundColor: Colors.blueAccent,
+                        ),
+                      ),
+                    ),
                     Container(
                       padding: EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 0.0),
                       child: Form(
@@ -68,7 +93,7 @@ class _loginState extends State<login> {
                             SizedBox(height: 20.0),
                             TextFormField(
                                 validator: (val) =>
-                                    val.isEmpty ? 'Enter email' : null,
+                                val.isEmpty ? 'Enter email' : null,
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
@@ -133,11 +158,13 @@ class _loginState extends State<login> {
                                       )),
                                   onPressed: () async {
                                     if (_key.currentState.validate()) {
+                                      setState(()=> load = true);
                                       dynamic output = await _authentication
                                           .login(email, password);
                                       if (output == null) {
                                         setState(() => error =
-                                            'incorret password or email !');
+                                        'incorret password or email !');
+                                        load = false;
                                       }
                                     }
                                   }),
@@ -146,23 +173,23 @@ class _loginState extends State<login> {
                             Text(
                               error,
                               style:
-                                  TextStyle(fontSize: 15.0,
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red,
-                                  ),
+                              TextStyle(fontSize: 15.0,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red,
+                              ),
                             )
                           ],
                         ),
                       ),
                     )
                   ],
-                ))
-              ],
-            ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
