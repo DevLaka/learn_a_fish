@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:learnafish/Components/FishList.dart';
 
 class Home extends StatelessWidget {
-  final services _homeAuthentication = services();
+  final Services _homeAuthentication = Services();
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<Fish>>.value(
@@ -51,7 +51,7 @@ class Home extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.exit_to_app),
                   onPressed: () async {
-                    await _homeAuthentication.SignOut();
+                    await _homeAuthentication.signOut();
                   },
                 ),
               ],
