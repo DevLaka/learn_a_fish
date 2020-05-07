@@ -17,12 +17,12 @@ import 'package:flutter/material.dart';
 import 'package:learnafish/screens/Register.dart';
 import 'package:learnafish/screens/Login.dart';
 
-class authenticate extends StatefulWidget {
+class Authenticate extends StatefulWidget {
   @override
-  _authenticateState createState() => _authenticateState();
+  _AuthenticateState createState() => _AuthenticateState();
 }
 
-class _authenticateState extends State<authenticate> {
+class _AuthenticateState extends State<Authenticate> {
 
   //statement
   bool value = true;
@@ -34,11 +34,11 @@ class _authenticateState extends State<authenticate> {
   Widget build(BuildContext context) {
     if (value)
     {
-      return login(redirect: redirect);
+      return Login(redirect: redirect);
     }
     else
     {
-      return register(redirect: redirect);
+      return Register(redirect: redirect);
     }
   }
 }

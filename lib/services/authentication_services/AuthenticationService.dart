@@ -16,9 +16,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:learnafish/models/user.dart';
 import 'package:learnafish/services/authentication_services/UserDBService.dart';
-import 'package:learnafish/services/fish_crud_and_orther_services/db.dart';
 
-class services{
+
+class Services{
 
 final FirebaseAuth _userAuthInstance = FirebaseAuth.instance;
 
@@ -54,7 +54,7 @@ final FirebaseAuth _userAuthInstance = FirebaseAuth.instance;
       AuthResult rslt = await _userAuthInstance.createUserWithEmailAndPassword(email: email, password: pwd);
       FirebaseUser reguser = rslt.user;
       //new document for extra information on user 
-      await UserDBService(uid: reguser.uid).updateUser('username', '-');
+      await UserDBService(uid: reguser.uid).updateUser('Initial user name', ' Initial Bio');
 
       return  _firebaseuser(reguser);
     }catch(e)
@@ -66,7 +66,7 @@ final FirebaseAuth _userAuthInstance = FirebaseAuth.instance;
   }
 
   //signout
-  Future SignOut() async{
+  Future signOut() async{
     try{
       return await _userAuthInstance.signOut();
     }catch(e){

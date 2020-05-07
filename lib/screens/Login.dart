@@ -19,16 +19,16 @@ import 'package:learnafish/Components/Loading.dart';
 import 'package:learnafish/Components/Constants.dart';
 import 'package:learnafish/services/authentication_services/AuthenticationService.dart';
 
-class login extends StatefulWidget {
+class Login extends StatefulWidget {
   final Function redirect;
-  login({this.redirect});
+  Login({this.redirect});
 
   @override
-  _loginState createState() => _loginState();
+  _LoginState createState() => _LoginState();
 }
 
-class _loginState extends State<login> {
-  final services _authentication = services();
+class _LoginState extends State<Login> {
+  final Services _authentication = Services();
   //for validations
   final _key = GlobalKey<FormState>();
   String error = '';
@@ -118,7 +118,7 @@ class _loginState extends State<login> {
                                 color: Colors.white,
                               ),
                               decoration: newTextInputDecoration.copyWith(
-                                labelText: "Pasword",
+                                labelText: "Password",
                                 prefixIcon: Icon(
                                   Icons.vpn_key,
                                   color: Colors.white,

@@ -18,7 +18,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:learnafish/models/user.dart';
 
 class UserDBService{
-  // reference to the collection
+  // reference to the user collection
   final CollectionReference userCollection = Firestore.instance.collection('User');
 
   //variables for user management
@@ -33,13 +33,13 @@ class UserDBService{
     });
 
   }
-  //delte record
+  //delete record
   Future deleteusernew() async{
     bool result = false;
     return await  userCollection.document(uid).delete();
   }
 
-  //delte record
+  //delete user record
   Future deleteuser() async{
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     return await user.delete();

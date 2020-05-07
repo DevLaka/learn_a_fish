@@ -18,16 +18,16 @@ import 'package:learnafish/Components/Loading.dart';
 import 'package:learnafish/services/authentication_services/AuthenticationService.dart';
 import 'package:learnafish/Components/Constants.dart';
 
-class register extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function redirect;
-  register({this.redirect});
+  Register({this.redirect});
 
   @override
-  _registerState createState() => _registerState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _registerState extends State<register> {
-  final services _authentication = services();
+class _RegisterState extends State<Register> {
+  final Services _authentication = Services();
 
   //for validations
   final _key = GlobalKey<FormState>();

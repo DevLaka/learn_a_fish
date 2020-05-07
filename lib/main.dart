@@ -31,14 +31,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<usermodel>.value(
-      value: services().user,
+      value: Services().user,
       child: MaterialApp(
         routes: {
           '/home': (context) => Home(),
           '/UserManagementview': (context) => Usermanagementview(),
           '/fishInsert': (context) => FishInsert(),
           '/fishView': (context) => FishView(),
-          '/login': (context) => login(),
+          '/login': (context) => Login(),
         },
         home: SplashScreen(
           gradientBackground: LinearGradient(
@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
               'https://i.giphy.com/media/sxXJgb4LCmJ44/giphy.gif'),
           loaderColor: Colors.white,
           photoSize: 150.0,
-          navigateAfterSeconds: wrapper(),
+          navigateAfterSeconds: Wrapper(),
         ),
       ),
     );
