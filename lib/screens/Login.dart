@@ -4,6 +4,8 @@
 /// module Current Trends in Software Engineering. The intellectual and technical concepts contained herein are        *
 /// proprietary to its developers and Dissemination of this information or reproduction of this material is            *
 /// strictly forbidden unless prior permission is obtained.                                                            *
+/// @ description this page is responsible for login a user. user should enter the correct email address and           *
+/// relevant password in order to login or else a error message will be shown.                                         *                                                          *
 ///                                                                                                                    *
 /// @author D.L.Kodagoda            IT17145008                                                                         *
 ///                                                                                                                    *

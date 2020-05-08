@@ -4,7 +4,9 @@
 /// module Current Trends in Software Engineering. The intellectual and technical concepts contained herein are        *
 /// proprietary to its developers and Dissemination of this information or reproduction of this material is            *
 /// strictly forbidden unless prior permission is obtained.                                                            *
-///                                                                                                                    *
+///  @ description this page is reponsible for creating a new user and giving initial user naem an bio. the            *
+/// login function and logout function is also provided by this page.                                                  *
+/// reference : https://www.youtube.com/watch?v=Vr_ahm78h_g video series.                                              *
 /// @author D.L.Kodagoda            IT17145008                                                                         *
 ///                                                                                                                    *
 ///*********************************************************************************************************************
@@ -18,12 +20,12 @@ class Services{
 
 final FirebaseAuth _userAuthInstance = FirebaseAuth.instance;
 
- usermodel _firebaseuser(FirebaseUser userfirebase)
+ Usermodel _firebaseuser(FirebaseUser userfirebase)
  {
-    return userfirebase != null ? usermodel(userid: userfirebase.uid) : null;
+    return userfirebase != null ? Usermodel(userid: userfirebase.uid) : null;
  }
   //change user stream
-  Stream<usermodel>get user{
+  Stream<Usermodel>get user{
     return _userAuthInstance.onAuthStateChanged.map( _firebaseuser);
   }
   //login

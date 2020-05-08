@@ -33,7 +33,7 @@ class LearnAFish extends StatelessWidget {
      * @description Provides the access to the user stream data and pass those
      * data to the descendent widgets using Provider package
      */
-    return StreamProvider<usermodel>.value(
+    return StreamProvider<Usermodel>.value(
       value: Services().user,
       child: MaterialApp(
         // all the routes of the application

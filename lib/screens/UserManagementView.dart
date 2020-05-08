@@ -5,6 +5,9 @@
 /// proprietary to its developers and Dissemination of this information or reproduction of this material is            *
 /// strictly forbidden unless prior permission is obtained.                                                            *
 ///                                                                                                                    *
+/// @description this page is responsible for updating the user information.                                           *
+///  if a user needs to delete the account it also provided by this page                                               *
+///                                                                                                                    *
 /// @author D.L.Kodagoda            IT17145008                                                                         *
 ///                                                                                                                    *
 ///*********************************************************************************************************************
@@ -23,7 +26,7 @@ class Usermanagementview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-      final user = Provider.of<usermodel>(context);
+      final user = Provider.of<Usermodel>(context);
     return StreamProvider<Userdata>.value(
       value: UserDBService(uid:user.userid).userdata,
       child: Container(

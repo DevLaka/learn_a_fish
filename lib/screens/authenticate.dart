@@ -4,6 +4,8 @@
 /// module Current Trends in Software Engineering. The intellectual and technical concepts contained herein are        *
 /// proprietary to its developers and Dissemination of this information or reproduction of this material is            *
 /// strictly forbidden unless prior permission is obtained.                                                            *
+/// @description this page is responsible for redirecting with in login page and register page.                        *
+///  referrence : https://www.youtube.com/watch?v=Vr_ahm78h_g video series                                             *
 ///                                                                                                                    *
 /// @author D.L.Kodagoda            IT17145008                                                                         *
 ///                                                                                                                    *

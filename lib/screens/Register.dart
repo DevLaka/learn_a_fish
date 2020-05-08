@@ -4,6 +4,10 @@
 /// module Current Trends in Software Engineering. The intellectual and technical concepts contained herein are        *
 /// proprietary to its developers and Dissemination of this information or reproduction of this material is            *
 /// strictly forbidden unless prior permission is obtained.                                                            *
+/// @description this page is responsible for the registering a new user . this will ask for a email address and       *
+/// a password in order to register. the user should enter a valid email address and password whichhas more than       *
+/// 5 characters.  if user enters a valid email address and a password ; will register successfully and redirect to    *
+/// the home page else and error pop up.                                                                               *
 ///                                                                                                                    *
 /// @author D.L.Kodagoda            IT17145008                                                                         *
 ///                                                                                                                    *

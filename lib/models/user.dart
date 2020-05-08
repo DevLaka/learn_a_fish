@@ -4,15 +4,15 @@
 /// module Current Trends in Software Engineering. The intellectual and technical concepts contained herein are        *
 /// proprietary to its developers and Dissemination of this information or reproduction of this material is            *
 /// strictly forbidden unless prior permission is obtained.                                                            *
-///                                                                                                                    *
+///  @description this page is responsible for providing the data variables in the user collection.                    *
 /// @author D.L.Kodagoda            IT17145008                                                                         *
 ///                                                                                                                    *
 ///*********************************************************************************************************************
 
-class usermodel {
+class Usermodel {
   final String userid;
 
-  usermodel({this.userid});
+  Usermodel({this.userid});
 }
 
 //user management

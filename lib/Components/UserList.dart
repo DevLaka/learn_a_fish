@@ -3,8 +3,12 @@
 /// Specializing in Software Engineering at Sri Lanka Institute of Information Technology as an assignment for the     *
 /// module Current Trends in Software Engineering. The intellectual and technical concepts contained herein are        *
 /// proprietary to its developers and Dissemination of this information or reproduction of this material is            *
-/// strictly forbidden unless prior permission is obtained.                                                            *
+/// strictly forbidden unless prior permission is obtained.                                                            *                    
 ///                                                                                                                    *
+///  @description this page is responsible for updating the user information and deleting the user account.initially   *
+/// when registering the user application itself gives an user name and a bio and when user first goes to the          *
+///  management page those values are displayed. after updating the values the updated username and bio will be shown. *
+///  if a user needs to delete the account it also provided by this page                                               *
 /// @author D.L.Kodagoda            IT17145008                                                                         *
 ///                                                                                                                    *
 ///*********************************************************************************************************************
