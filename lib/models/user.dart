@@ -1,22 +1,18 @@
 /// ********************************************************************************************************************
-/// This project was developed by the below-mentioned developers who are studying for                                  *
-/// BSc (Hons) in Information Technology Specializing in Software Engineering at Sri Lanka Institute of                *
-/// Information Technology. This project is developed as an assignment for the module Current Trends in                *
-/// Software Engineering.                                                                                              *
-/// Student Name             IT Number                                                                                 *
-/// H.M.Y.L.W.Bandara       IT17250498                                                                                 *
-/// D.L.Kodagoda            IT17145008                                                                                 *
-///                                                                                                                    *
-/// The intellectual and technical concepts contained herein are proprietary to its developers mentioned above         *
-/// and Dissemination of this information or reproduction of this material is strictly forbidden unless                *
-/// prior written permission is obtained from the above mentioned developers.                                          *
+/// This project was developed by two undergraduates who are studying for BSc (Hons) in Information Technology         *
+/// Specializing in Software Engineering at Sri Lanka Institute of Information Technology as an assignment for the     *
+/// module Current Trends in Software Engineering. The intellectual and technical concepts contained herein are        *
+/// proprietary to its developers and Dissemination of this information or reproduction of this material is            *
+/// strictly forbidden unless prior permission is obtained.                                                            *
+///  @description this page is responsible for providing the data variables in the user collection.                    *
+/// @author D.L.Kodagoda            IT17145008                                                                         *
 ///                                                                                                                    *
 ///*********************************************************************************************************************
 
-class usermodel {
+class Usermodel {
   final String userid;
 
-  usermodel({this.userid});
+  Usermodel({this.userid});
 }
 
 //user management

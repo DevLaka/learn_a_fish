@@ -4,27 +4,36 @@
 /// module Current Trends in Software Engineering. The intellectual and technical concepts contained herein are        *
 /// proprietary to its developers and Dissemination of this information or reproduction of this material is            *
 /// strictly forbidden unless prior permission is obtained.                                                            *
+/// @description this page is responsible for redirecting with in login page and register page.                        *
+///  referrence : https://www.youtube.com/watch?v=Vr_ahm78h_g video series                                             *
 ///                                                                                                                    *
-/// @description This class is the fish model class.                                                                          *
-/// @author H.M.Y.L.W.Bandara IT1725098 lakshanwarunab@gmail.com                                                       *
+/// @author D.L.Kodagoda            IT17145008                                                                         *
 ///                                                                                                                    *
 ///*********************************************************************************************************************
 
-class Fish {
-  final String docID;
-  final String scName;
-  final String comName;
-  final String description;
-  final String kingdom;
-  final String cls;
-  final int len;
+import 'package:flutter/material.dart';
+import 'package:learnafish/screens/Register.dart';
+import 'package:learnafish/screens/Login.dart';
 
-  Fish(
-      {this.docID,
-      this.scName,
-      this.comName,
-      this.description,
-      this.kingdom,
-      this.cls,
-      this.len});
+class Authenticate extends StatefulWidget {
+  @override
+  _AuthenticateState createState() => _AuthenticateState();
+}
+
+class _AuthenticateState extends State<Authenticate> {
+  //statement
+  bool value = true;
+
+  void redirect() {
+    setState(() => value = !value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (value) {
+      return Login(redirect: redirect);
+    } else {
+      return Register(redirect: redirect);
+    }
+  }
 }

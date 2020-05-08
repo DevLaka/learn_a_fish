@@ -1,15 +1,14 @@
 /// ********************************************************************************************************************
-/// This project was developed by the below-mentioned developers who are studying for                                  *
-/// BSc (Hons) in Information Technology Specializing in Software Engineering at Sri Lanka Institute of                *
-/// Information Technology. This project is developed as an assignment for the module Current Trends in                *
-/// Software Engineering.                                                                                              *
-/// Student Name             IT Number                                                                                 *
-/// H.M.Y.L.W.Bandara       IT17250498                                                                                 *
-/// D.L.Kodagoda            IT17145008                                                                                 *
+/// This project was developed by two undergraduates who are studying for BSc (Hons) in Information Technology         *
+/// Specializing in Software Engineering at Sri Lanka Institute of Information Technology as an assignment for the     *
+/// module Current Trends in Software Engineering. The intellectual and technical concepts contained herein are        *
+/// proprietary to its developers and Dissemination of this information or reproduction of this material is            *
+/// strictly forbidden unless prior permission is obtained.                                                            *
 ///                                                                                                                    *
-/// The intellectual and technical concepts contained herein are proprietary to its developers mentioned above         *
-/// and Dissemination of this information or reproduction of this material is strictly forbidden unless                *
-/// prior written permission is obtained from the above mentioned developers.                                          *
+/// @description This class is responsible inserting a fish document in the firebase fireStore, connecting to the      *
+/// camera, selecting photo from gallery, taking a photo using camera, uploading the photo to the firebase Storage,    *
+/// form validation, success and error popups.                                                                         *
+/// @author H.M.Y.L.W.Bandara IT1725098 lakshanwarunab@gmail.com                                                       *
 ///                                                                                                                    *
 ///*********************************************************************************************************************
 
@@ -18,7 +17,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:learnafish/Components/Constants.dart';
-import 'package:learnafish/services/fish_crud_and_orther_services/db.dart';
+import 'package:learnafish/services/fish_crud_and_orther_services/FishDBService.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class FishInsert extends StatefulWidget {
@@ -27,24 +26,31 @@ class FishInsert extends StatefulWidget {
 }
 
 class _FishInsertState extends State<FishInsert> {
-  final _formkey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>(); // FormKey associated with form used for form validation
+
+  // List of fish classes that will be assigned to dropDown
   final List<String> classes = [
     'Superclass Agnatha',
     'chondrichthyes',
     'osteichthyes'
   ];
-  File image;
-  String id = DateTime.now().toIso8601String();
+
+
+  File image; // Stores the image fie that will be uploaded
+  String id = DateTime.now().toIso8601String(); // Generates a unique id for fish document
   String commonName = "";
   String scientificName = "";
   String family = "";
   String kingdom = "";
-  String phylum = "";
   String description = "";
   String error = "";
-  String cls = "Superclass Agnatha";
-  int len = 1;
+  String cls = "Superclass Agnatha"; // Class of the fish
+  int len = 1; // Length of the fish
 
+  // ignore: slash_for_doc_comments
+  /**
+   * @description Picking up the image by gallery mode using ImagePicker package
+   */
   _useGallery() async {
     var choseImage = await ImagePicker.pickImage(source: ImageSource.gallery);
     this.setState(() {
@@ -54,6 +60,10 @@ class _FishInsertState extends State<FishInsert> {
     });
   }
 
+  // ignore: slash_for_doc_comments
+  /**
+   * @description Picking up the image by camera mode using ImagePicker package
+   */
   _useCamera() async {
     var choseImage = await ImagePicker.pickImage(source: ImageSource.camera);
     this.setState(() {
@@ -63,6 +73,10 @@ class _FishInsertState extends State<FishInsert> {
 
   @override
   Widget build(BuildContext context) {
+    /**
+     * @description PopUp after inserting the fish mentioning whether the operation is successful or not
+     * In this popup two options are given whether to add another fish or view fish list
+     */
     Future<bool> _showSuccessPopUp() {
       return Alert(
           context: context,
@@ -103,6 +117,9 @@ class _FishInsertState extends State<FishInsert> {
           ]).show();
     }
 
+    /**
+     * @description Shows the popUp to choose the mode between camera or gallery
+     */
     Future<bool> _showCameraDialog() {
       return Alert(context: context, title: "Choose a method", buttons: [
         DialogButton(
@@ -142,6 +159,10 @@ class _FishInsertState extends State<FishInsert> {
       ]).show();
     }
 
+    /**
+     * @description Shows the popUp with the error if the insertion fails
+     * @param e - generated error message
+     */
     Future<bool> _showErrorPopUp(Error e) {
       return Alert(
           context: context,
@@ -169,6 +190,12 @@ class _FishInsertState extends State<FishInsert> {
           ]).show();
     }
 
+    /**
+     * @description Uploads the Image to the firebase Storage.
+     * @param context - current build context
+     * @param id - id of the fish document
+     * Reference : https://youtu.be/7uqmY6le4xk
+     */
     Future uploadImage(BuildContext context) async {
       String imageFileName = id;
       print(imageFileName);
@@ -178,7 +205,7 @@ class _FishInsertState extends State<FishInsert> {
           firebaseStorageReference.putFile(image);
       StorageTaskSnapshot imageTaskSnapshot = await imageUploadTask.onComplete;
       setState(() {
-        print('picture uploaded');
+        print(imageTaskSnapshot.storageMetadata.toString());
       });
     }
 
@@ -200,8 +227,9 @@ class _FishInsertState extends State<FishInsert> {
           body: Container(
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
             child: SingleChildScrollView(
+              // Fish insert form
               child: Form(
-                key: _formkey,
+                key: _formKey,
                 child: Column(
                   children: <Widget>[
                     Center(
@@ -479,10 +507,10 @@ class _FishInsertState extends State<FishInsert> {
                           ),
                         ),
                         onPressed: () async {
-                          if (_formkey.currentState.validate()) {
+                          if (_formKey.currentState.validate()) {
                             setState(() {});
                             try {
-                              dynamic result = await dbService().addFishData(
+                              dynamic result = await FishDBService().addFishData(
                                 id,
                                 scientificName,
                                 commonName,
@@ -494,7 +522,7 @@ class _FishInsertState extends State<FishInsert> {
                               print(result);
                               if (result == null) {
                                 //successful pop up
-                                _formkey.currentState.reset();
+                                _formKey.currentState.reset();
                                 print('accessed');
                                 _showSuccessPopUp();
                               }
